@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32922.545
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TankoholicServer", "TankoholicServer.csproj", "{1AA042C4-E816-42D7-8898-A1568C601152}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TankoholicLibrary", "..\TankoholicLibrary\TankoholicLibrary.csproj", "{8EAF45C2-EA2B-4820-81F0-2FDB3E9DEC7D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1AA042C4-E816-42D7-8898-A1568C601152}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AA042C4-E816-42D7-8898-A1568C601152}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AA042C4-E816-42D7-8898-A1568C601152}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AA042C4-E816-42D7-8898-A1568C601152}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EAF45C2-EA2B-4820-81F0-2FDB3E9DEC7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EAF45C2-EA2B-4820-81F0-2FDB3E9DEC7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EAF45C2-EA2B-4820-81F0-2FDB3E9DEC7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EAF45C2-EA2B-4820-81F0-2FDB3E9DEC7D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {06358239-FC8F-4D2A-B806-42079134DB7A}
+	EndGlobalSection
+EndGlobal
