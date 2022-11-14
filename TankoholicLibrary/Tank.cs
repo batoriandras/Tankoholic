@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TankoholicClassLibrary
+namespace TankoholicLibrary
 {
-    public enum MessageIds
+    public class Tank
     {
-        PLAYER_NAME = 1,
-        PLAYER_POSITION = 2,
-        
+
     }
 }

@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TankoholicClassLibrary
+namespace TankoholicClient
 {
-    public enum MessageIds
+    interface PassableTile : ITile
     {
-        PLAYER_NAME = 1,
-        PLAYER_POSITION = 2,
-        
+
     }
 }

@@ -1,3 +1,3 @@
 ﻿
-using var game = new TankoholicClient.Game1();
+using var game = new TankoholicClient.Main();
 game.Run();

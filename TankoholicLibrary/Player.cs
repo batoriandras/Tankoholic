@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using TankoholicLibrary;
 
 namespace TankoholicClassLibrary
 {
@@ -8,6 +9,7 @@ namespace TankoholicClassLibrary
         public int Id { get; set; }
 
         public Vector2 Position { get; private set; }
+        public Tank Tank { get; set; }
 
         public Player(string username, int id)
         {
