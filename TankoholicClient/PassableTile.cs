@@ -10,4 +10,9 @@ namespace TankoholicClient
     {
 
     }
+
+    public interface SpritePassableTile
+    {
+
+    }
 }

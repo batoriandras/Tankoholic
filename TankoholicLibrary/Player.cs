@@ -16,6 +16,7 @@ namespace TankoholicClassLibrary
             Username = username;
             Id = id;
             Position = new Vector2(0,0);
+            Tank = new Tank();
         }
 
         public void SetPosition(float x, float y)

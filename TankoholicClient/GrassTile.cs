@@ -8,17 +8,17 @@ using System.Threading.Tasks;
 
 namespace TankoholicClient
 {
-    public class GrassTile : PassableTile
-    {
-        public Color Color { get => Color.Green;}
-        public Vector2 Position { get; set; }
 
-        public GrassTile(Vector2 position)
+
+
+
+
+    public class SpriteGrassTile : GrassTile, SpriteITile
+    {
+        public SpriteGrassTile(Vector2 position) : base(position)
         {
-            Position = position;
         }
 
-        
 
         public void Update()
         {
@@ -31,5 +31,20 @@ namespace TankoholicClient
                         new Rectangle((int)Position.X * GameConstants.CELL_SIZE, (int)Position.Y * GameConstants.CELL_SIZE,
                                       GameConstants.CELL_SIZE, GameConstants.CELL_SIZE), Color);
         }
+    }
+
+
+    public class GrassTile : PassableTile
+    {
+        public Color Color { get => Color.Green;}
+        public Vector2 Position { get; set; }
+
+        public GrassTile(Vector2 position)
+        {
+            Position = position;
+        }
+
+        
+
     }
 }

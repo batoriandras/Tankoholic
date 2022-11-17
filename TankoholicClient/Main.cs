@@ -18,7 +18,7 @@ namespace TankoholicClient
         private MouseState lastMouseState;
 
 
-        Player player = new Player("Attila", 1);
+        
 
         public Main()
         {
@@ -41,7 +41,7 @@ namespace TankoholicClient
             ClientNetworkManager.Instance.Connect();
 
 
-            MessageSender.SendName(player);
+          //  MessageSender.SendName(player);
 
             
             base.Initialize();
@@ -54,14 +54,17 @@ namespace TankoholicClient
             rectangleBlock = new Texture2D(GraphicsDevice, 1, 1);
             Color xnaColorBorder = new Color(255, 255, 255);
             rectangleBlock.SetData(new[] { xnaColorBorder });
-           // spriteFont = Content.Load<SpriteFont>("Fonts/Arial");
+          //  spriteFont = Content.Load<SpriteFont>("Fonts/Arial");
         }
 
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            {
                 Exit();
+            }
 
+            InputManager.Instance.UserInput(Keyboard.GetState());
 
             //MouseState currentMouseState = Mouse.GetState();
             //player.SetPosition(currentMouseState.X, currentMouseState.Y);
