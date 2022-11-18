@@ -6,19 +6,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using TankoholicClassLibrary;
+using TankoholicLibrary;
 
 namespace TankoholicClient
 {
     // Manages the game's rules
     public sealed class GameManager
     {
-        List<TankSprite> otherTanks = new List<TankSprite>();
+        List<Tank> otherTanks = new List<Tank>();
 
-        public Player player = new Player("Én", 1);
+        public Player player = new Player("Me", 1);
 
         #region Map
 
-        private readonly SpriteITile[,] map = new SpriteITile[GameConstants.CELLS_HORIZONTALLY_COUNT, GameConstants.CELLS_VERTICALLY_COUNT];
+        private readonly ITile[,] map = new ITile[GameConstants.CELLS_HORIZONTALLY_COUNT, GameConstants.CELLS_VERTICALLY_COUNT];
 
         public void GenerateField()
         {
@@ -26,7 +27,7 @@ namespace TankoholicClient
             {
                 for (int x = 0; x < GameConstants.CELLS_HORIZONTALLY_COUNT; x++)
                 {
-                    map[x, y] = new SpriteGrassTile(new Vector2(x, y));
+                    map[x, y] = new GrassTile(new Vector2(x * GameConstants.CELL_SIZE, y * GameConstants.CELL_SIZE));
                 }
             }
         }
@@ -50,6 +51,7 @@ namespace TankoholicClient
 
         public void Initialize()
         {
+            MessageSender.SendName(player);
             GenerateField();
         }
 
@@ -65,6 +67,7 @@ namespace TankoholicClient
                     map[x, y].Update();
                 }
             }
+            player.Tank.Update();
         }
 
 
@@ -74,10 +77,19 @@ namespace TankoholicClient
             {
                 for (int x = 0; x < GameConstants.CELLS_HORIZONTALLY_COUNT; x++)
                 {
-                    map[x, y].Draw(ref spriteBatch, ref rectangleBlock);
+                    if (map[x, y] is GrassTile)
+                    {
+                        (map[x, y] as GrassTile).Draw(ref spriteBatch, ref rectangleBlock);
+                    }
+                    else
+                    {
+                        map[x, y].Draw(ref spriteBatch, ref rectangleBlock);
+                    }
+                    
                 }
             }
-        }
 
+            player.Tank.Draw(ref spriteBatch, ref rectangleBlock);
+        }
     }
 }

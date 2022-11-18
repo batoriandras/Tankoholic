@@ -7,28 +7,37 @@ using Microsoft.Xna.Framework;
 
 namespace TankoholicLibrary
 {
-    public class Tank
+    public class Tank : IEntity
     {
-        Vector2 position;
-        Vector2 velocity;
-
-        int health;
-
-        public void Move(Vector2 direction)
+        public Tank(Vector2 position)
         {
-            velocity = direction;
+            this.Position = position;
+        }
+
+        public Sprite Sprite => new ImageSprite("Images/Tank");
+
+        public int Speed { get; private set; } = 3;
+
+        public Vector2 Velocity { get; private set; }
+        public int Health { get; private set; }
+
+        
+
+        public Vector2 Position { get; set; }
+
+        public void SetVelocity(Vector2 direction)
+        {
+            Velocity = direction * Speed;
+        }
+        
+        public void Update()
+        {
+            Position += Velocity;
         }
 
         void Shoot()
         {
-
+            
         }
-
-        public void UpdateLogic()
-        {
-            position += velocity;
-            velocity = new Vector2(0,0);
-        }
-
     }
 }

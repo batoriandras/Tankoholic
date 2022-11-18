@@ -16,9 +16,6 @@ namespace TankoholicClient
 
         public static void SendName(Player player)
         {
-            // MessageSendMode.Reliable az TCP protokolt használ, ami azt jelenti hogy biztosra fog menni hogy az üzenet átment-e. Ez lassabb
-            // MessageSendMode.Unreliable az UDP protokolt használ, amit nem érdekli hogy az üzenet megérkezett-e. Ez gyorsabb
-
             Message message = Message.Create(MessageSendMode.Reliable, (ushort)MessageIds.PLAYER_NAME);
             message.AddString(player.Username);
             ClientNetworkManager.Instance.Client.Send(message);
@@ -26,14 +23,10 @@ namespace TankoholicClient
 
         public static void AddPosition(Player player)
         {
-            // MessageSendMode.Reliable az TCP protokolt használ, ami azt jelenti hogy biztosra fog menni hogy az üzenet átment-e. Ez lassabb
-            // MessageSendMode.Unreliable az UDP protokolt használ, amit nem érdekli hogy az üzenet megérkezett-e. Ez gyorsabb
-
-            Message message = Message.Create(MessageSendMode.Reliable, (ushort)MessageIds.PLAYER_POSITION);
-            message.AddFloats(new float[] { player.Position.X, player.Position.Y }, false);
+            Message message = Message.Create(MessageSendMode.Unreliable, (ushort)MessageIds.PLAYER_POSITION);
+            message.AddFloats(new float[] { player.Tank.Position.X, player.Tank.Position.Y }, false);
             messages.Add(message);
         }
-
 
         public static void SendAll()
         {

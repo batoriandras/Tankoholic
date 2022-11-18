@@ -5,7 +5,6 @@ using System.Diagnostics;
 
 namespace TankoholicClient
 {
-  
     public class ClientNetworkManager
     {
         private static ClientNetworkManager instance;
@@ -53,9 +52,6 @@ namespace TankoholicClient
         {
 
         }
-
-
-
 
         public void Update()
         {

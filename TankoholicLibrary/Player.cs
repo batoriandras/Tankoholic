@@ -8,21 +8,17 @@ namespace TankoholicClassLibrary
         public string Username { get; set; }
         public int Id { get; set; }
 
-        public Vector2 Position { get; private set; }
+        
         public Tank Tank { get; set; }
 
         public Player(string username, int id)
         {
             Username = username;
             Id = id;
-            Position = new Vector2(0,0);
-            Tank = new Tank();
+            Tank = new Tank(position: new Vector2(100, 100));
         }
 
-        public void SetPosition(float x, float y)
-        {
-            Position = new Vector2(x,y);
-        }
+        
     }
     
 }

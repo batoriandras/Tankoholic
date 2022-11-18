@@ -14,11 +14,7 @@ namespace TankoholicClient
         private Texture2D rectangleBlock;
         private SpriteFont spriteFont;
 
-
         private MouseState lastMouseState;
-
-
-        
 
         public Main()
         {
@@ -35,15 +31,11 @@ namespace TankoholicClient
         {
             Window.Title = GameConstants.TITLE;
 
-            GameManager.Instance.Initialize();
             ClientNetworkManager.Instance.Initialize();
-
             ClientNetworkManager.Instance.Connect();
 
+            GameManager.Instance.Initialize();
 
-          //  MessageSender.SendName(player);
-
-            
             base.Initialize();
         }
 
@@ -76,7 +68,6 @@ namespace TankoholicClient
             MessageSender.SendAll();
             ClientNetworkManager.Instance.Update();
 
-
             base.Update(gameTime);
         }
 
@@ -87,7 +78,6 @@ namespace TankoholicClient
             spriteBatch.Begin();
             GameManager.Instance.Draw(spriteBatch, rectangleBlock);
             spriteBatch.End();
-
 
             base.Draw(gameTime);
         }

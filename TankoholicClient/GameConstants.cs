@@ -4,6 +4,8 @@ namespace TankoholicClient
 {
     public static class GameConstants
     {
+        public const string TITLE = "Tankoholic";
+
         public static readonly Random Random = new Random();
 
         public const int CELLS_HORIZONTALLY_COUNT = 360;
@@ -12,9 +14,5 @@ namespace TankoholicClient
 
         public const int WINDOW_WIDTH = CELLS_HORIZONTALLY_COUNT * CELL_SIZE;
         public const int WINDOW_HEIGHT = CELLS_VERTICALLY_COUNT * CELL_SIZE;
-
-        public const string TITLE = "Tankoholic";
-
-
     }
 }

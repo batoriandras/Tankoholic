@@ -46,8 +46,7 @@ namespace TankoholicClient
                 direction += new Vector2(1, 0);
             }
 
-            GameManager.Instance.player.Tank.Move(direction);
+            GameManager.Instance.player.Tank.SetVelocity(direction);
         }
-
     }
 }
