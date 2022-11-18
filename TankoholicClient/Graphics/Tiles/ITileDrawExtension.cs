@@ -4,7 +4,7 @@ using TankoholicLibrary;
 
 namespace TankoholicClient
 {
-    public static class SpriteITileExtension
+    public static class ITileDrawExtension
     {
         public static void Draw(this ITile tile, ref SpriteBatch spriteBatch, ref Texture2D rectangleBlock)
         {
@@ -12,6 +12,6 @@ namespace TankoholicClient
                 (int)tile.Position.X, (int)tile.Position.Y,
                 (GameConstants.CELL_SIZE * 10), (GameConstants.CELL_SIZE) * 10),
                 (tile.Sprite as ColorSprite).Color);
-        }
+        }sa
     }
 }

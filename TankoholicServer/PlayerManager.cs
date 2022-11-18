@@ -1,4 +1,5 @@
-﻿using Riptide;
+﻿using Microsoft.Xna.Framework;
+using Riptide;
 using TankoholicClassLibrary;
 
 namespace TankoholicServer
@@ -30,8 +31,8 @@ namespace TankoholicServer
           //  Console.WriteLine(fromClientId);
             if (fromClientId == 2)
             {
-                players.ForEach(x => x.SetPosition(message.GetFloats()[0], message.GetFloats()[1]));
-                Console.WriteLine("Player pos: " + players[0].Position.X + ", " + players[0].Position.Y);
+                players.ForEach(player => player.Tank.Position = new Vector2(message.GetFloats()[0], message.GetFloats()[1]));
+                Console.WriteLine("Player pos: " + players[0].Tank.Position.X + ", " + players[0].Tank.Position.Y);
             }
         }
     }
