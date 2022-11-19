@@ -11,6 +11,8 @@ namespace TankoholicClassLibrary
         
         public Tank Tank { get; set; }
 
+        public Pencil pencil { get; set; }
+
         public Player(string username, int id)
         {
             Username = username;

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace TankoholicLibrary
-{ 
+{
     public class ColorSprite : Sprite
     {
         public ColorSprite(Color color)

@@ -21,6 +21,11 @@ namespace TankoholicClient
 
         private readonly ITile[,] map = new ITile[GameConstants.CELLS_HORIZONTALLY_COUNT, GameConstants.CELLS_VERTICALLY_COUNT];
 
+        public void SetTile(int x, int y, ITile tile)
+        {
+            map[x, y] = tile;
+        }
+
         public void GenerateField()
         {
             for (int y = 0; y < GameConstants.CELLS_VERTICALLY_COUNT; y++)
