@@ -1,11 +1,10 @@
-﻿using Riptide;
+﻿using System;
+using Riptide;
 using Riptide.Utils;
-using System;
-using System.Diagnostics;
+using TankoholicClassLibrary;
 
 namespace TankoholicClient
 {
-  
     public class ClientNetworkManager
     {
         private static ClientNetworkManager instance;
@@ -29,33 +28,13 @@ namespace TankoholicClient
             RiptideLogger.Initialize(Console.WriteLine, Console.WriteLine, Console.WriteLine, Console.WriteLine, false);
 
             Client = new Client();
-
-            Client.Connected += DidConnect;
-            Client.ConnectionFailed += FailedToConnect;
-            Client.Disconnected += DidDisconnect;
+            Client.ClientDisconnected += (s, e) => Player.OtherPlayers.Remove(e.Id);
         }
 
         public void Connect()
         {
             Client.Connect($"{ip}:{port}");
         }
-
-        private void DidConnect(object sender, EventArgs e)
-        {
-
-        }
-        private void FailedToConnect(object sender, EventArgs e)
-        {
-
-        }
-
-        private void DidDisconnect(object sender, EventArgs e)
-        {
-
-        }
-
-
-
 
         public void Update()
         {

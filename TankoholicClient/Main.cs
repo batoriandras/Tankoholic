@@ -1,9 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Riptide;
-using System;
-using TankoholicClassLibrary;
 
 namespace TankoholicClient
 {
@@ -14,11 +11,7 @@ namespace TankoholicClient
         private Texture2D rectangleBlock;
         private SpriteFont spriteFont;
 
-
         private MouseState lastMouseState;
-
-
-        
 
         public Main()
         {
@@ -29,21 +22,19 @@ namespace TankoholicClient
             };
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+
+            Exiting += (s, e) => ClientNetworkManager.Instance.Stop();
         }
 
         protected override void Initialize()
         {
             Window.Title = GameConstants.TITLE;
 
-            GameManager.Instance.Initialize();
             ClientNetworkManager.Instance.Initialize();
-
             ClientNetworkManager.Instance.Connect();
 
+            GameManager.Instance.Initialize();
 
-          //  MessageSender.SendName(player);
-
-            
             base.Initialize();
         }
 
@@ -54,7 +45,6 @@ namespace TankoholicClient
             rectangleBlock = new Texture2D(GraphicsDevice, 1, 1);
             Color xnaColorBorder = new Color(255, 255, 255);
             rectangleBlock.SetData(new[] { xnaColorBorder });
-          //  spriteFont = Content.Load<SpriteFont>("Fonts/Arial");
         }
 
         protected override void Update(GameTime gameTime)
@@ -64,18 +54,10 @@ namespace TankoholicClient
                 Exit();
             }
 
-            InputManager.Instance.UserInput(Keyboard.GetState());
-
-            //MouseState currentMouseState = Mouse.GetState();
-            //player.SetPosition(currentMouseState.X, currentMouseState.Y);
-            //MessageSender.AddPosition(player);
-            //lastMouseState = currentMouseState;
-
             GameManager.Instance.Update();
-
-            MessageSender.SendAll();
             ClientNetworkManager.Instance.Update();
 
+            MessageSender.SendAll();
 
             base.Update(gameTime);
         }
@@ -87,7 +69,6 @@ namespace TankoholicClient
             spriteBatch.Begin();
             GameManager.Instance.Draw(spriteBatch, rectangleBlock);
             spriteBatch.End();
-
 
             base.Draw(gameTime);
         }

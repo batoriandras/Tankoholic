@@ -5,34 +5,44 @@ namespace TankoholicServer
 {
     public static class PlayerManager
     {
-        static PlayerManager() { }
+        public static readonly List<ushort> PlayerIds = new();
 
-
-        public static List<Player> players = new List<Player>();
-
-        public static void Spawn(ushort id, string username)
+        public static void SendSpawnMessage(ushort id, string username)
         {
-            Player player = new Player(username, id);
-            players.Add(player);
+            PlayerIds.Add(id);
+            ushort[] ids = new ushort[PlayerIds.Count];
+            for(int i = 0; i < PlayerIds.Count; i++)
+                ids[i] = PlayerIds[i];
+            /* Egyenlőre minden Player ugyanazt a nevet kapja */
+            Program.Server!.SendToAll(CreateSpawnMessage(ids, username));
 
-            Console.WriteLine("Player added: " + username);
-        }
-
-        [MessageHandler((ushort)MessageIds.PLAYER_NAME)]
-        private static void Name(ushort fromClientId, Message message)
-        {
-            Spawn(fromClientId, message.GetString());
+            ServerDebug.Info($"Player joined! Id: {id} Username: {username}");
         }
 
         [MessageHandler((ushort)MessageIds.PLAYER_POSITION)]
-        private static void Position(ushort fromClientId, Message message)
+        private static void Position(ushort id, Message message)
         {
-          //  Console.WriteLine(fromClientId);
-            if (fromClientId == 2)
-            {
-                players.ForEach(x => x.SetPosition(message.GetFloats()[0], message.GetFloats()[1]));
-                Console.WriteLine("Player pos: " + players[0].Position.X + ", " + players[0].Position.Y);
-            }
+            var position = message.GetFloats();
+            Program.Server!.SendToAll(CreatePositionMessage(id, position));
+
+            if (!Program.DebugPosition) return;
+            ServerDebug.Warn($"Player({id}) new position: X:{position[0]} Y:{position[1]}");
+        }
+
+        private static Message CreateSpawnMessage(ushort[] id, string username)
+        {
+            Message message = Message.Create(MessageSendMode.Reliable, (ushort)MessageIds.PLAYER_SPAWN);
+            message.AddUShorts(id);
+            message.AddString(username);
+            return message;
+        }
+
+        private static Message CreatePositionMessage(ushort id, float[] position)
+        {
+            Message message = Message.Create(MessageSendMode.Reliable, MessageIds.PLAYER_POSITION);
+            message.AddUShort(id);
+            message.AddFloats((float[])position);
+            return message;
         }
     }
 }

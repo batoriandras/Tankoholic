@@ -14,7 +14,5 @@ namespace TankoholicClient
         public const int WINDOW_HEIGHT = CELLS_VERTICALLY_COUNT * CELL_SIZE;
 
         public const string TITLE = "Tankoholic";
-
-
     }
 }

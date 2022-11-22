@@ -28,25 +28,7 @@ namespace TankoholicClient
 
         public void UserInput(KeyboardState keyboardInput)
         {
-            Vector2 direction = new Vector2(0, 0);
-            if (keyboardInput.IsKeyDown(Keys.W))
-            {
-                direction += new Vector2(0, -1);
-            }
-            if (keyboardInput.IsKeyDown(Keys.S))
-            {
-                direction += new Vector2(0, 1);
-            }
-            if (keyboardInput.IsKeyDown(Keys.A))
-            {
-                direction += new Vector2(-1, 0);
-            }
-            if (keyboardInput.IsKeyDown(Keys.D))
-            {
-                direction += new Vector2(1, 0);
-            }
-
-            GameManager.Instance.player.Tank.Move(direction);
+            
         }
 
     }

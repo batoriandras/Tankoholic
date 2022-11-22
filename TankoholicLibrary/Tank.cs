@@ -9,7 +9,7 @@ namespace TankoholicLibrary
 {
     public class Tank
     {
-        Vector2 position;
+        public Vector2 position { get; set; }
         Vector2 velocity;
 
         int health;
@@ -17,6 +17,7 @@ namespace TankoholicLibrary
         public void Move(Vector2 direction)
         {
             velocity = direction;
+            UpdateLogic();
         }
 
         void Shoot()
@@ -29,6 +30,5 @@ namespace TankoholicLibrary
             position += velocity;
             velocity = new Vector2(0,0);
         }
-
     }
 }

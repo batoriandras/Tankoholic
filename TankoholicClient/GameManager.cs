@@ -1,21 +1,12 @@
-﻿using Microsoft.VisualBasic.Devices;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using TankoholicClassLibrary;
+using Microsoft.Xna.Framework.Input;
 
 namespace TankoholicClient
 {
-    // Manages the game's rules
     public sealed class GameManager
     {
-        List<TankSprite> otherTanks = new List<TankSprite>();
-
-        public Player player = new Player("Én", 1);
-
         #region Map
 
         private readonly SpriteITile[,] map = new SpriteITile[GameConstants.CELLS_HORIZONTALLY_COUNT, GameConstants.CELLS_VERTICALLY_COUNT];
@@ -53,10 +44,12 @@ namespace TankoholicClient
             GenerateField();
         }
 
-        // Update the fields according to the rules
         public void Update()
         {
-            otherTanks.ForEach(tank => tank.Update());
+            if (Player.OtherPlayers.TryGetValue(ClientNetworkManager.Instance.Client.Id, out Player localPlayer))
+            {
+                localPlayer.Update(Keyboard.GetState());
+            }
 
             for (int y = 0; y < GameConstants.CELLS_VERTICALLY_COUNT; y++)
             {
@@ -67,7 +60,6 @@ namespace TankoholicClient
             }
         }
 
-
         public void Draw(SpriteBatch spriteBatch, Texture2D rectangleBlock)
         {
             for (int y = 0; y < GameConstants.CELLS_VERTICALLY_COUNT; y++)
@@ -77,7 +69,14 @@ namespace TankoholicClient
                     map[x, y].Draw(ref spriteBatch, ref rectangleBlock);
                 }
             }
-        }
 
+            /* Ideiglenesen tesztelésre */
+            foreach(var player in Player.OtherPlayers.Values)
+            {
+                spriteBatch.Draw(rectangleBlock,
+                        new Rectangle((int)player.Tank.position.X * GameConstants.CELL_SIZE, (int)player.Tank.position.Y * GameConstants.CELL_SIZE,
+                                      50, 50), Color.Gray);
+            }
+        }
     }
 }

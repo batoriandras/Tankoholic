@@ -1,18 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TankoholicClient
 {
-
-
-
-
-
     public class SpriteGrassTile : GrassTile, SpriteITile
     {
         public SpriteGrassTile(Vector2 position) : base(position)
