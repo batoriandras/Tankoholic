@@ -9,7 +9,7 @@ namespace TankoholicLibrary
 {
     public class Tank
     {
-        public Bullet Shoot(Vector2 position, Vector2 direction) // Az irány valószínüleg a tank-tól fog jönni
+        public Bullet Shoot(Vector2 position, Vector2 direction)
         {
             return new Bullet(position, direction);
         }
