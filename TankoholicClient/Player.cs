@@ -1,7 +1,6 @@
-﻿using System.Numerics;
-using TankoholicLibrary;
+﻿using Microsoft.Xna.Framework;
 
-namespace TankoholicClassLibrary
+namespace TankoholicClient
 {
     public class Player
     {
@@ -18,6 +17,7 @@ namespace TankoholicClassLibrary
             Username = username;
             Id = id;
             Tank = new Tank(position: new Vector2(100, 100));
+            pencil = new Pencil(Id, Microsoft.Xna.Framework.Color.Gray, new DrawnTile(Id, Color.Gray));
         }
 
         

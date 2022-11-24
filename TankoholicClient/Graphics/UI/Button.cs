@@ -29,8 +29,6 @@ namespace TankoholicClient
             this.ImageTexture = image;
             this.Width = width;
             this.Height = height;
-
-            this.Id = id;
         }
     }
 }

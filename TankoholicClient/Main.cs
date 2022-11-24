@@ -56,7 +56,8 @@ namespace TankoholicClient
                 Exit();
             }
 
-            InputManager.Instance.UserInput(Keyboard.GetState());
+            InputManager.Instance.KeyboardInput(Keyboard.GetState());
+            InputManager.Instance.MouseInput(Mouse.GetState());
 
             //MouseState currentMouseState = Mouse.GetState();
             //player.SetPosition(currentMouseState.X, currentMouseState.Y);
@@ -76,7 +77,7 @@ namespace TankoholicClient
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
-            GameManager.Instance.Draw(spriteBatch, rectangleBlock);
+            GameManager.Instance.Draw(ref spriteBatch, ref rectangleBlock);
             spriteBatch.End();
 
             base.Draw(gameTime);

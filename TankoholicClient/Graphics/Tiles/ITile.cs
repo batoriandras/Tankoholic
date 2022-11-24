@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TankoholicLibrary
+namespace TankoholicClient
 {
     public interface ITile : IEntity {}
 }

@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using TankoholicClient;
 
-namespace TankoholicLibrary
-{
+namespace TankoholicClient
+{ 
     public class Tank : IEntity
     {
         public Tank(Vector2 position)
@@ -38,6 +40,14 @@ namespace TankoholicLibrary
         void Shoot()
         {
             
+        }
+
+        public void Draw( ref SpriteBatch spriteBatch, ref Texture2D rectangleBlock)
+        {
+            spriteBatch.Draw(rectangleBlock,
+                new Rectangle((int)Position.X, (int)Position.Y,
+                (GameConstants.CELL_SIZE * 10), (GameConstants.CELL_SIZE) * 10),
+                Color.Black);
         }
     }
 }

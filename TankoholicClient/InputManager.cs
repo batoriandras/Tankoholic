@@ -26,7 +26,7 @@ namespace TankoholicClient
         }
         #endregion
 
-        public void UserInput(KeyboardState keyboardInput)
+        public void KeyboardInput(KeyboardState keyboardInput)
         {
             Vector2 direction = new Vector2(0, 0);
             if (keyboardInput.IsKeyDown(Keys.W))
@@ -47,6 +47,14 @@ namespace TankoholicClient
             }
 
             GameManager.Instance.player.Tank.SetVelocity(direction);
+        }
+
+        public void MouseInput(MouseState mouseInput)
+        {
+            if (mouseInput.RightButton == ButtonState.Pressed)
+            {
+                MapManager.Instance.DrawWithPencilAt(mouseInput.X, mouseInput.Y, GameManager.Instance.player.pencil);
+            }
         }
     }
 }
