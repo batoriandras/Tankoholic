@@ -16,7 +16,7 @@ namespace TankoholicClient
             this.Position = position;
         }
 
-        public int Speed { get; private set; } = 3;
+        public int Speed { get; private set; } = 2;
 
         public Vector2 Velocity { get; private set; }
         public int Health { get; private set; }

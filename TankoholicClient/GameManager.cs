@@ -1,4 +1,3 @@
-﻿using Microsoft.VisualBasic.Devices;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -13,7 +12,8 @@ namespace TankoholicClient
     {
         List<Tank> otherTanks = new List<Tank>();
 
-        public Player player = new Player("Me", 1);
+        public Player player = new Player(1, "Me");
+
 
         #region Singleton
         private static GameManager instance = null;
@@ -32,7 +32,6 @@ namespace TankoholicClient
 
         public void Initialize()
         {
-            MessageSender.SendName(player);
             MapManager.Instance.Initialize();
         }
 
@@ -42,6 +41,13 @@ namespace TankoholicClient
 
             MapManager.Instance.Update();
             player.Tank.Update();
+
+            /*
+            if (Player.OtherPlayers.TryGetValue(ClientNetworkManager.Instance.Client.Id, out Player localPlayer))
+            {
+                localPlayer.Update(Keyboard.GetState());
+            }
+            */
         }
 
         public void Draw(ref SpriteBatch spriteBatch, ref Texture2D rectangleBlock)
@@ -49,6 +55,14 @@ namespace TankoholicClient
             MapManager.Instance.Draw(ref spriteBatch, ref rectangleBlock);
 
             player.Tank.Draw(ref spriteBatch, ref rectangleBlock);
+
+            /* Ideiglenesen tesztelésre */
+            foreach (var player in Player.OtherPlayers.Values)
+            {
+                spriteBatch.Draw(rectangleBlock,
+                        new Rectangle((int)player.Tank.position.X, (int)player.Tank.position.Y,
+                                      40, 40), Color.Blue);
+            }
         }
     }
 }

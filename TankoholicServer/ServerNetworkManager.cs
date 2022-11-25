@@ -4,8 +4,6 @@ using System;
 
 namespace TankoholicServer
 {
-
-
     public class ServerNetworkManager
     {
         private static ServerNetworkManager? instance;
