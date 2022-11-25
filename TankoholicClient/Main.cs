@@ -56,9 +56,6 @@ namespace TankoholicClient
                 Exit();
             }
 
-            InputManager.Instance.KeyboardInput(Keyboard.GetState());
-            InputManager.Instance.MouseInput(Mouse.GetState());
-
             GameManager.Instance.Update();
 
             MessageSender.SendAll();

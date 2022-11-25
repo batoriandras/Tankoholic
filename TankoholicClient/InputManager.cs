@@ -46,9 +46,23 @@ namespace TankoholicClient
                 direction += new Vector2(1, 0);
             }
 
+            
+
             GameManager.Instance.player.Tank.SetVelocity(direction);
         }
 
+        public Bullet ShootInput(KeyboardState keyboardInput, MouseState mouseInput)
+        {
+            Vector2 mouseDirection;
+            if (keyboardInput.IsKeyDown(Keys.Space))
+            {
+                mouseDirection = Vector2.Normalize(
+                    mouseInput.Position.ToVector2() - GameManager.Instance.player.Tank.Position
+                    );
+                return GameManager.Instance.player.Tank.Shoot(mouseDirection);
+            }
+            return null;
+        }
         public void MouseInput(MouseState mouseInput)
         {
             if (mouseInput.RightButton == ButtonState.Pressed)
