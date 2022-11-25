@@ -5,8 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TankoholicLibrary
-{ 
+namespace TankoholicClient
+{
     public class ColorSprite : Sprite
     {
         public ColorSprite(Color color)

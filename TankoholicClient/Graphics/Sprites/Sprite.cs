@@ -4,7 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TankoholicLibrary
+namespace TankoholicClient
 {
-    interface PassableTile : ITile {}
+    public class Sprite
+    {
+
+    }
 }
