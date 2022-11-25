@@ -59,11 +59,6 @@ namespace TankoholicClient
             InputManager.Instance.KeyboardInput(Keyboard.GetState());
             InputManager.Instance.MouseInput(Mouse.GetState());
 
-            //MouseState currentMouseState = Mouse.GetState();
-            //player.SetPosition(currentMouseState.X, currentMouseState.Y);
-            //MessageSender.AddPosition(player);
-            //lastMouseState = currentMouseState;
-
             GameManager.Instance.Update();
 
             MessageSender.SendAll();

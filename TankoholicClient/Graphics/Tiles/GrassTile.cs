@@ -10,23 +10,18 @@ namespace TankoholicClient
 {
     public class GrassTile : PassableTile
     {
-        public Vector2 Position { get; set; }
-
-        public string SpriteName => throw new NotImplementedException();
-
-        public Sprite Sprite { get => new ColorSprite(Color.Green); }
-
         public GrassTile(Vector2 position)
         {
+            sprite = new ColorSprite(Color.Green);
             Position = position;
         }
 
-        public void Update()
+        public override void Update()
         {
-            
+          
         }
 
-        public void Draw(ref SpriteBatch spriteBatch, ref Texture2D rectangleBlock)
+        public override void Draw(ref SpriteBatch spriteBatch, ref Texture2D rectangleBlock)
         {
             spriteBatch.Draw(rectangleBlock, new Rectangle(
                 (int)Position.X, (int)Position.Y,

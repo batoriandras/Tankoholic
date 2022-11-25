@@ -13,13 +13,11 @@ namespace TankoholicClient
         private const int pencilSize = 5;
         public Color Color { get; set; }
 
-        public ITile tileToDraw;
 
-        public Pencil(int playerId, Color color, ITile tileToDraw)
+        public Pencil(int playerId, Color color)
         {
             this.playerId = playerId;
             Color = color;
-            this.tileToDraw = tileToDraw;
         }
     }
 }

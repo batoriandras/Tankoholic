@@ -17,10 +17,7 @@ namespace TankoholicClient
             Username = username;
             Id = id;
             Tank = new Tank(position: new Vector2(100, 100));
-            pencil = new Pencil(Id, Microsoft.Xna.Framework.Color.Gray, new DrawnTile(Id, Color.Gray));
+            pencil = new Pencil(Id, Microsoft.Xna.Framework.Color.Gray);
         }
-
-        
     }
-    
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TankoholicClient
 {
-    public interface UnpassableTile : ITile
+    public abstract class UnpassableTile : ITile
     {
     }
 }

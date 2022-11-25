@@ -9,7 +9,6 @@ using TankoholicClassLibrary;
 
 namespace TankoholicClient
 {
-    // Manages the game's rules
     public sealed class GameManager
     {
         List<Tank> otherTanks = new List<Tank>();
@@ -37,7 +36,6 @@ namespace TankoholicClient
             MapManager.Instance.Initialize();
         }
 
-        // Update the fields according to the rules
         public void Update()
         {
             otherTanks.ForEach(tank => tank.Update());
@@ -45,7 +43,6 @@ namespace TankoholicClient
             MapManager.Instance.Update();
             player.Tank.Update();
         }
-
 
         public void Draw(ref SpriteBatch spriteBatch, ref Texture2D rectangleBlock)
         {

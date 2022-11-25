@@ -7,5 +7,5 @@ using System.Threading.Tasks;
 
 namespace TankoholicClient
 {
-    public interface ITile : IEntity {}
+    public abstract class ITile : Entity { }
 }

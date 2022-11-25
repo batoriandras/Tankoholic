@@ -9,36 +9,33 @@ namespace TankoholicClient
         public int PlayerId { get; set; }
         public Color Color { get; set; }
 
-        public DrawnTile(int playerId, Color color)
+        public DrawnTile(int playerId, Color color, Vector2 position)
         {
             PlayerId = playerId;
             Color = color;
+
+            this.position = position;
+
+            
         }
 
-        public static DrawnTile FromPencil(Pencil pencil)
+        public static DrawnTile FromPencil(Pencil pencil, Vector2 position)
         {
-            return new DrawnTile(pencil.playerId, pencil.Color);
+            return new DrawnTile(pencil.playerId, pencil.Color, position);
         }
 
-        public Vector2 Position { get; set; }
-
-        public Sprite Sprite => throw new NotImplementedException();
-
-        public void Update()
+        public override void Update()
         {
-            // tile doesnt update
+            
         }
 
-        public void Draw(ref SpriteBatch spriteBatch, ref Texture2D rectangleBlock)
+        public override void Draw(ref SpriteBatch spriteBatch, ref Texture2D rectangleBlock)
         {
             spriteBatch.Draw(rectangleBlock, new Rectangle(
-                50, 50,
-                // (int)Position.X, (int)Position.Y,
-                (GameConstants.CELL_SIZE * 10), (GameConstants.CELL_SIZE) * 10),
-                //  (Sprite as ColorSprite).Color
-                Color.Red
+                (int)Position.X, (int)Position.Y,
+                GameConstants.CELL_SIZE, GameConstants.CELL_SIZE),
+                Color
                 );
         }
-
     }
 }

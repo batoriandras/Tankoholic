@@ -8,17 +8,21 @@ using System.Threading.Tasks;
 
 namespace TankoholicClient
 {
-    public interface IEntity
+    public abstract class Entity
     {
-        public void Update();
+        public Vector2 position;
+        public int width, height;
+        public Sprite sprite;
 
-        public void Draw(ref SpriteBatch spriteBatch, ref Texture2D rectangleBlock);
+        public Vector2 Position { get => position; set => position = value; }
 
+        public int Width { get => width; }
+        public int Height { get => height; }
 
+        public Sprite Sprite { get => sprite; }
 
-       // A TILE NEM TUDTHAT ÖNMAGA POZICIÓJÁRÓL!
-        public Vector2 Position { get; set; }
+        public abstract void Update();
 
-        public Sprite Sprite { get; }
+        public abstract void Draw(ref SpriteBatch spriteBatch, ref Texture2D rectangleBlock);
     }
 }

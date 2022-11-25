@@ -53,7 +53,7 @@ namespace TankoholicClient
         {
             if (mouseInput.RightButton == ButtonState.Pressed)
             {
-                MapManager.Instance.DrawWithPencilAt(mouseInput.X, mouseInput.Y, GameManager.Instance.player.pencil);
+                MapManager.Instance.CheckIfCanDraw(mouseInput);
             }
         }
     }
