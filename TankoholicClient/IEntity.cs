@@ -13,6 +13,7 @@ namespace TankoholicClient
         public Vector2 position;
         public int width, height;
         public Sprite sprite;
+        public ICollisionShape collisionShape;
 
         public Vector2 Position { get => position; set => position = value; }
 

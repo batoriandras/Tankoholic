@@ -41,7 +41,7 @@ namespace TankoholicClient
 
             MapManager.Instance.Update();
             player.Tank.Update();
-
+            Player.OtherPlayers.Values.ToList().ForEach(otherPlayer => CollisionManager.Instance.ResolveCollision(player.Tank, otherPlayer.Tank));
             /*
             if (Player.OtherPlayers.TryGetValue(ClientNetworkManager.Instance.Client.Id, out Player localPlayer))
             {

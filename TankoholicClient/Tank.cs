@@ -14,6 +14,7 @@ namespace TankoholicClient
         public Tank(Vector2 position)
         {
             this.Position = position;
+            collisionShape = new CollisionCircle(20, position);
         }
 
         public int Speed { get; private set; } = 2;
@@ -35,6 +36,7 @@ namespace TankoholicClient
         public override void Update()
         {
             Position += Velocity;
+            collisionShape.Position = Position;
         }
 
         public override void Draw(ref SpriteBatch spriteBatch, ref Texture2D rectangleBlock)

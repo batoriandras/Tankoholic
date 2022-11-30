@@ -3,6 +3,7 @@ using TankoholicClient;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using System.Linq;
 
 namespace TankoholicClassLibrary
 {
@@ -52,8 +53,12 @@ namespace TankoholicClassLibrary
             var ids = message.GetUShorts();
             var username = message.GetString();
 
+            if (ids.Contains(GameManager.Instance.player.Id))
+            {
+                return;
+            }
             /* Ha valakinek van erre valami jobb megoldása akkor ne legyen rest átírni */
-            if(ids.Length == 1)
+            if (ids.Length == 1)
             {
                 OtherPlayers.Add(ids[0], new Player(ids[0], username));
             }
