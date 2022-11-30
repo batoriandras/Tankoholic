@@ -68,15 +68,16 @@ namespace TankoholicClient
         {
             Vector2 centerDistance = ((CollisionCircle)entity1.collisionShape).CenterPosition - ((CollisionCircle)entity2.collisionShape).CenterPosition;
             float radius_sum = ((CollisionCircle)entity1.collisionShape).Radius + ((CollisionCircle)entity2.collisionShape).Radius;
-            float centerDistanceSq = (float)(Math.Pow(centerDistance.X, 2) + Math.Pow(centerDistance.Y, 2));
-            float radiusSq = (float)Math.Pow(((CollisionCircle)entity1.collisionShape).Radius + ((CollisionCircle)entity2.collisionShape).Radius, 2);
-            if(radiusSq == 0)
+            float length = (float)Math.Sqrt(Math.Pow(centerDistance.X, 2) + Math.Pow(centerDistance.Y, 2));
+            if(length == 0)
             {
-                radiusSq = 1;
+                length = 1;
             }
-            Vector2 unit = new Vector2(centerDistance.X / centerDistanceSq, centerDistance.Y / centerDistanceSq);
+            Vector2 unit = new Vector2(centerDistance.X / length, centerDistance.Y / length);
+            float unitX = centerDistance.X / length;
+            float unitY = centerDistance.Y / length;
             entity1.Position = entity2.position + (unit * (radius_sum + 1));
-            entity1.collisionShape.Position = entity1.Position;
+            entity1.collisionShape.Position = entity1.position;
         }
     }
 }
