@@ -25,6 +25,8 @@ namespace TankoholicClient
             };
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+
+            Exiting += (s, e) => ClientNetworkManager.Instance.Stop();
         }
 
         protected override void Initialize()
@@ -64,6 +66,7 @@ namespace TankoholicClient
             MessageSender.SendAll();
             ClientNetworkManager.Instance.Update();
 
+
             base.Update(gameTime);
         }
 
@@ -72,6 +75,7 @@ namespace TankoholicClient
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
+
             GameManager.Instance.Draw(ref spriteBatch, ref rectangleBlock);
             spriteBatch.End();
 
