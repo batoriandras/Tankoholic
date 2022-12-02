@@ -43,7 +43,7 @@ namespace TankoholicClassLibrary
 
             if (OtherPlayers.TryGetValue(id, out Player otherPlayer))
             {
-                otherPlayer.Tank.position = new Vector2(pos[0], pos[1]);
+                otherPlayer.Tank.Position = new Vector2(pos[0], pos[1]);
             }
         }
 

@@ -10,7 +10,5 @@ namespace TankoholicClient
     public interface ICollisionShape
     {
         Vector2 Position { get; set; }
-        bool CheckRectangleCollision(CollisionRectangle otherRectangle);
-        bool CheckCircleCollision(CollisionCircle otherCircle);
     }
 }

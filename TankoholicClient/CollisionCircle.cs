@@ -27,17 +27,5 @@ namespace TankoholicClient
             Radius = radius;
             Position = position;
         }
-        public bool CheckCircleCollision(CollisionCircle otherCircle)
-        {
-            Vector2 centerDistance = CenterPosition - otherCircle.CenterPosition;
-            float centerDistanceSq = (float)(Math.Pow(centerDistance.X, 2) + Math.Pow(centerDistance.Y, 2));
-            float radiusSq = (float)Math.Pow(Radius + otherCircle.Radius, 2);
-            return centerDistanceSq <= radiusSq;
-        }
-
-        public bool CheckRectangleCollision(CollisionRectangle otherRectangle)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
