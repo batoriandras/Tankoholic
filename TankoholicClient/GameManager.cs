@@ -48,6 +48,7 @@ namespace TankoholicClient
 
             lastMouseState = Mouse.GetState();
 
+            Player.OtherPlayers.Values.ToList().ForEach(otherPlayer => CollisionManager.Instance.ResolveCollision(player.Tank, otherPlayer.Tank));
             /*
             if (Player.OtherPlayers.TryGetValue(ClientNetworkManager.Instance.Client.Id, out Player localPlayer))
             {
@@ -66,7 +67,7 @@ namespace TankoholicClient
             foreach (var player in Player.OtherPlayers.Values)
             {
                 spriteBatch.Draw(rectangleBlock,
-                        new Rectangle((int)player.Tank.position.X, (int)player.Tank.position.Y,
+                        new Rectangle((int)player.Tank.Position.X, (int)player.Tank.Position.Y,
                                       40, 40), Color.Blue);
             }
         }

@@ -12,7 +12,7 @@ namespace TankoholicClient
     {
         public GrassTile(Vector2 position)
         {
-            sprite = new ColorSprite(Color.Green);
+            Sprite = new ColorSprite(Color.Green);
             Position = position;
         }
 

@@ -10,19 +10,22 @@ namespace TankoholicClient
 {
     public abstract class Entity
     {
-        public Vector2 position;
-        public int width, height;
-        public Sprite sprite;
+        public CollisionShape collisionShape;
 
-        public Vector2 Position { get => position; set => position = value; }
+        public Vector2 Position { get; set; }
 
-        public int Width { get => width; }
-        public int Height { get => height; }
+        public int Width { get; protected set; }
+        public int Height { get; protected set; }
 
-        public Sprite Sprite { get => sprite; }
+        public Sprite Sprite { get; protected set; }
 
         public abstract void Update();
 
         public abstract void Draw(ref SpriteBatch spriteBatch, ref Texture2D rectangleBlock);
+    }
+    public enum CollisionShape
+    {
+        Circle,
+        Rectangle
     }
 }

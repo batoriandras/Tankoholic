@@ -14,7 +14,9 @@ namespace TankoholicClient
             PlayerId = playerId;
             Color = color;
 
-            this.position = position;
+            Position = position;
+
+            
         }
 
         public static DrawnTile FromPencil(Pencil pencil, Vector2 position)

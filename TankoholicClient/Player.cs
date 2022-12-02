@@ -3,6 +3,7 @@ using TankoholicClient;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using System.Linq;
 
 namespace TankoholicClassLibrary
 {
@@ -42,7 +43,7 @@ namespace TankoholicClassLibrary
 
             if (OtherPlayers.TryGetValue(id, out Player otherPlayer))
             {
-                otherPlayer.Tank.position = new Vector2(pos[0], pos[1]);
+                otherPlayer.Tank.Position = new Vector2(pos[0], pos[1]);
             }
         }
 
@@ -53,7 +54,7 @@ namespace TankoholicClassLibrary
             var username = message.GetString();
 
             /* Ha valakinek van erre valami jobb megoldása akkor ne legyen rest átírni */
-            if(ids.Length == 1)
+            if (ids.Length == 1)
             {
                 OtherPlayers.Add(ids[0], new Player(ids[0], username));
             }
