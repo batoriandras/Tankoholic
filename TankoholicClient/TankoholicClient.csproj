@@ -12,6 +12,19 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Managers\**" />
+    <EmbeddedResource Remove="Managers\**" />
+    <None Remove="Managers\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Content\AmericanCaptain-MdEY.otf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\AmericanCaptain-MdEY.otf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.1.303" />
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.303" />
     <PackageReference Include="RiptideNetworking.Riptide" Version="2.0.0" />
@@ -20,8 +33,12 @@
     <ProjectReference Include="..\TankoholicLibrary\TankoholicLibrary.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Managers\" />
     <Folder Include="Network\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Content\File.spritefont">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Target Name="RestoreDotnetTools" BeforeTargets="Restore">
     <Message Text="Restoring dotnet tools" Importance="High" />

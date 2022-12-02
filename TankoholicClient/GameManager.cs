@@ -15,6 +15,8 @@ namespace TankoholicClient
         public Player player = new Player(1, "Me");
 
 
+        private MouseState lastMouseState;
+
         #region Singleton
         private static GameManager instance = null;
 
@@ -41,6 +43,10 @@ namespace TankoholicClient
 
             MapManager.Instance.Update();
             player.Tank.Update();
+
+            ComponentManager.Instance.Update(Mouse.GetState(), lastMouseState);
+
+            lastMouseState = Mouse.GetState();
 
             /*
             if (Player.OtherPlayers.TryGetValue(ClientNetworkManager.Instance.Client.Id, out Player localPlayer))

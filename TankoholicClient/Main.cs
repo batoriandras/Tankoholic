@@ -16,6 +16,9 @@ namespace TankoholicClient
 
         private MouseState lastMouseState;
 
+
+        public static bool exitGame = false;
+
         public Main()
         {
             graphics = new GraphicsDeviceManager(this)
@@ -37,6 +40,7 @@ namespace TankoholicClient
             ClientNetworkManager.Instance.Connect();
 
             GameManager.Instance.Initialize();
+            ComponentManager.Instance.Initialize(Content);
 
             base.Initialize();
         }
@@ -48,12 +52,14 @@ namespace TankoholicClient
             rectangleBlock = new Texture2D(GraphicsDevice, 1, 1);
             Color xnaColorBorder = new Color(255, 255, 255);
             rectangleBlock.SetData(new[] { xnaColorBorder });
-          //  spriteFont = Content.Load<SpriteFont>("Fonts/Arial");
+            spriteFont = Content.Load<SpriteFont>("Font");
         }
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed
+            || Keyboard.GetState().IsKeyDown(Keys.Escape)
+            || exitGame)
             {
                 Exit();
             }
@@ -77,9 +83,12 @@ namespace TankoholicClient
             spriteBatch.Begin();
 
             GameManager.Instance.Draw(ref spriteBatch, ref rectangleBlock);
+            ComponentManager.Instance.Draw(ref spriteBatch, ref rectangleBlock, ref spriteFont);
             spriteBatch.End();
 
             base.Draw(gameTime);
         }
+
+        
     }
 }
