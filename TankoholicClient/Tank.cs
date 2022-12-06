@@ -13,7 +13,9 @@ namespace TankoholicClient
     {
         public Tank(Vector2 position)
         {
-            this.Position = position;
+            Position = position;
+            collisionShape = CollisionShape.Circle;
+            Width = 40;
         }
 
         public int Speed { get; private set; } = 2;

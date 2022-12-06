@@ -14,7 +14,7 @@ namespace TankoholicClient
             PlayerId = playerId;
             Color = color;
 
-            this.position = position;
+            Position = position;
 
             
         }
