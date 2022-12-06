@@ -6,17 +6,17 @@ using System.Collections.Generic;
 using System.Linq;
 using TankoholicClassLibrary;
 using System.Timers;
+using Riptide;
 
 namespace TankoholicClient
 {
     public sealed class GameManager
     {
         List<Tank> otherTanks = new List<Tank>();
-        private List<Bullet> bullets = new List<Bullet>();
+        public static readonly List<Bullet> Bullets = new();
         private Timer timer;
 
         public Player player = new Player(1, "Me");
-
 
         private MouseState lastMouseState;
 
@@ -35,6 +35,18 @@ namespace TankoholicClient
         }
         #endregion
 
+        [MessageHandler((ushort)MessageIds.BULLET_SPAWN)]
+        private static void HandleSpawn(Message message)
+        {
+            var position = message.GetFloats();
+            var direction = message.GetFloats();
+            var playerId = message.GetUShort();
+
+            Bullets.Add(new Bullet(
+                new Vector2(position[0], position[1]), 
+                new Vector2(direction[0], direction[1]), 
+                playerId));
+        }
         public void Initialize()
         {
             MapManager.Instance.Initialize();
@@ -52,18 +64,25 @@ namespace TankoholicClient
                 timer.Start();
                 player.Tank.ToggleCanShoot();
                 Bullet bullet = InputManager.Instance.ShootInput(Keyboard.GetState(), Mouse.GetState());
-                bullets.Add(bullet);
+                Bullets.Add(bullet);
+                MessageSender.SendSpawn(bullet);
             }
             otherTanks.ForEach(tank => tank.Update());
 
             MapManager.Instance.Update();
             player.Tank.Update();
-            bullets.ForEach(bullet => bullet.Update());
+            Bullets.ForEach(bullet => bullet.Update());
+            Bullets.ForEach(MessageSender.SendPosition);
 
             ComponentManager.Instance.Update(Mouse.GetState(), lastMouseState);
 
             lastMouseState = Mouse.GetState();
 
+            Bullets.ForEach(bullet => CollisionManager.Instance.ResolveCollision(bullet, player.Tank));
+            foreach (Player player in Player.OtherPlayers.Values)
+            {
+                Bullets.ForEach(bullet => CollisionManager.Instance.ResolveCollision(bullet, player.Tank));
+            }
             Player.OtherPlayers.Values.ToList().ForEach(otherPlayer => CollisionManager.Instance.ResolveCollision(player.Tank, otherPlayer.Tank));
             /*
             if (Player.OtherPlayers.TryGetValue(ClientNetworkManager.Instance.Client.Id, out Player localPlayer))
@@ -85,7 +104,7 @@ namespace TankoholicClient
                     new Rectangle((int)player.Tank.Position.X, (int)player.Tank.Position.Y,
                         40, 40), Color.Blue);
             }
-            foreach (var item in bullets)
+            foreach (var item in Bullets)
             {
                 item.Draw(ref spriteBatch, ref rectangleBlock);
             }

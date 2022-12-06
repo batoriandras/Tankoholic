@@ -11,7 +11,7 @@ namespace TankoholicClient
     {
         public Bullet Shoot(Vector2 position, Vector2 direction)
         {
-            return new Bullet(position, direction);
+            return new Bullet(position, direction, GameManager.Instance.player.Id);
         }
     }
 }

@@ -10,13 +10,18 @@ namespace TankoholicClient
 {
     public class Bullet:Entity
     {
-        public Vector2 Position { get; private set; }
         private Vector2 velocity;
-        private const int MULTIPLIER = 10;
-        public Bullet(Vector2 position, Vector2 direction)
+        private const int MULTIPLIER = 1;
+        public Vector2 Direction { get; private set; }
+        public int PlayerId { get; private set; }
+        public Bullet(Vector2 position, Vector2 direction, int playerId)
         {
             Position = position;
+            Direction = direction;
             velocity = direction * MULTIPLIER;
+            collisionShape = CollisionShape.Circle;
+            Width = 40;
+            PlayerId = playerId;
         }
         public override void Update()
         {

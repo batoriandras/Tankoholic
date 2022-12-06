@@ -18,6 +18,7 @@ namespace TankoholicClient
             Position = position;
             collisionShape = CollisionShape.Circle;
             Width = 40;
+            Health = 4;
         }
 
         public int Speed { get; private set; } = 2;
@@ -25,6 +26,11 @@ namespace TankoholicClient
         public Vector2 Velocity { get; private set; }
         public int Health { get; private set; }
         public bool CanShoot { get; private set; }
+
+        public void LoseHealth()
+        {
+            Health--;
+        }
         public void SetVelocity(Vector2 direction)
         {
             Velocity = direction * Speed;
@@ -32,7 +38,7 @@ namespace TankoholicClient
 
         public Bullet Shoot(Vector2 direction)
         {
-            return new Bullet(Position, direction);
+            return new Bullet(Position, direction, GameManager.Instance.player.Id);
         }
 
         public void ToggleCanShoot()
