@@ -8,5 +8,6 @@ namespace TankoholicClient
 {
     public abstract class UnpassableTile : ITile
     {
+
     }
 }

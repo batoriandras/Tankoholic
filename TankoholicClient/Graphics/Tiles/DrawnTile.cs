@@ -14,9 +14,10 @@ namespace TankoholicClient
             PlayerId = playerId;
             Color = color;
 
+            Width = GameConstants.CELL_SIZE;
+            Height = GameConstants.CELL_SIZE;
+            CollisionShape = new CollisionRectangle(position, Width, Height);
             Position = position;
-
-            
         }
 
         public static DrawnTile FromPencil(Pencil pencil, Vector2 position)
@@ -33,7 +34,7 @@ namespace TankoholicClient
         {
             spriteBatch.Draw(rectangleBlock, new Rectangle(
                 (int)Position.X, (int)Position.Y,
-                GameConstants.CELL_SIZE, GameConstants.CELL_SIZE),
+                Width, Height),
                 Color
                 );
         }
