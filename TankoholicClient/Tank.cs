@@ -10,8 +10,11 @@ namespace TankoholicClient
         public Tank(Vector2 position)
         {
             this.Position = position;
-            sprite = new ColorSprite(Color.Black);
+            Sprite = new ColorSprite(Color.Black);
             ApplyPowerup(new SpeedUpPowerup());
+            collisionShape = CollisionShape.Circle;
+            Width = 40;
+
         }
 
         public int InitialSpeed { get; private set; } = 2;
@@ -55,7 +58,7 @@ namespace TankoholicClient
             spriteBatch.Draw(rectangleBlock,
                 new Rectangle((int)Position.X, (int)Position.Y,
                 40, 40),
-                ((ColorSprite)sprite).Color);
+                ((ColorSprite)Sprite).Color);
         }
 
         void DisposePowerup()
@@ -72,10 +75,10 @@ namespace TankoholicClient
                 if (AppliedPowerup is SpeedUpPowerup speedUpPowerup)
                 {
                     CurrentSpeed = speedUpPowerup.speed;
-                    sprite = new ColorSprite(Color.Red);
+                    Sprite = new ColorSprite(Color.Red);
                     speedUpPowerup.OnEnd = delegate ()
                     {
-                        sprite = new ColorSprite(Color.Black);
+                        Sprite = new ColorSprite(Color.Black);
                         CurrentSpeed = InitialSpeed;
                         DisposePowerup();
                     };
