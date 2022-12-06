@@ -1,11 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TankoholicClassLibrary;
 
 namespace TankoholicClient
 {
@@ -49,6 +43,15 @@ namespace TankoholicClient
             
 
             GameManager.Instance.player.Tank.SetVelocity(direction);
+
+            if (direction.Length() != 0)
+            {
+                
+
+                MessageSender.SendPosition(GameManager.Instance.player);
+            }
+
+           
         }
 
         public Bullet ShootInput(KeyboardState keyboardInput, MouseState mouseInput)

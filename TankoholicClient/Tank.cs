@@ -14,11 +14,13 @@ namespace TankoholicClient
     {
         public Tank(Vector2 position)
         {
-            this.Position = position;
             CanShoot = true;
+            Position = position;
+            collisionShape = CollisionShape.Circle;
+            Width = 40;
         }
 
-        public int Speed { get; private set; } = 3;
+        public int Speed { get; private set; } = 2;
 
         public Vector2 Velocity { get; private set; }
         public int Health { get; private set; }
