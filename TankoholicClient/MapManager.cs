@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 
 namespace TankoholicClient
 {
@@ -78,6 +79,22 @@ namespace TankoholicClient
                     }
                 }
             }
+        }
+
+        public List<PassableTile> emptyTiles()
+        {
+            List<PassableTile> tiles = new List<PassableTile>();
+            for (int y = 0; y < GameConstants.CELLS_VERTICALLY_COUNT; y++)
+            {
+                for (int x = 0; x < GameConstants.CELLS_HORIZONTALLY_COUNT; x++)
+                {
+                    if (map[x,y] is PassableTile passableTile)
+                    {
+                        tiles.Add(passableTile);
+                    }
+                }
+            }
+            return tiles;
         }
 
         public void CheckIfCanDraw(MouseState currentMouseState)

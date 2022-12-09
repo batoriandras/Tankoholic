@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Riptide;
 using System;
+using System.Reflection.Metadata;
 using TankoholicClassLibrary;
 
 namespace TankoholicClient
@@ -12,9 +13,6 @@ namespace TankoholicClient
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         private Texture2D rectangleBlock;
-        private SpriteFont spriteFont;
-
-        private MouseState lastMouseState;
 
 
         public static bool exitGame = false;
@@ -52,7 +50,8 @@ namespace TankoholicClient
             rectangleBlock = new Texture2D(GraphicsDevice, 1, 1);
             Color xnaColorBorder = new Color(255, 255, 255);
             rectangleBlock.SetData(new[] { xnaColorBorder });
-            spriteFont = Content.Load<SpriteFont>("Font");
+
+            ComponentManager.Instance.LoadContent(Content);
         }
 
         protected override void Update(GameTime gameTime)
@@ -83,7 +82,7 @@ namespace TankoholicClient
             spriteBatch.Begin();
 
             GameManager.Instance.Draw(ref spriteBatch, ref rectangleBlock);
-            ComponentManager.Instance.Draw(ref spriteBatch, ref rectangleBlock, ref spriteFont);
+            ComponentManager.Instance.Draw(ref spriteBatch, ref rectangleBlock);
             spriteBatch.End();
 
             base.Draw(gameTime);

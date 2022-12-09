@@ -1,7 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using TankoholicClient;
-using TankoholicClient.Powerup;
 
 namespace TankoholicClient
 {
@@ -14,11 +12,11 @@ namespace TankoholicClient
             ApplyPowerup(new SpeedUpPowerup());
             collisionShape = CollisionShape.Circle;
             Width = 40;
-
+            Height = 40;
         }
 
-        public int InitialSpeed { get; private set; } = 2;
-        public int CurrentSpeed { get; private set; } = 2;
+        public float InitialSpeed { get; private set; } = 2.8f;
+        public float CurrentSpeed { get; private set; } = 2.8f;
 
         public Vector2 Velocity { get; private set; }
         public int MaxHealth { get; private set; } = 4;
@@ -57,7 +55,7 @@ namespace TankoholicClient
         {
             spriteBatch.Draw(rectangleBlock,
                 new Rectangle((int)Position.X, (int)Position.Y,
-                40, 40),
+                Width, Height),
                 ((ColorSprite)Sprite).Color);
         }
 

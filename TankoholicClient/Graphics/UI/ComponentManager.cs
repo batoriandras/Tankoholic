@@ -24,9 +24,13 @@ namespace TankoholicClient
         }
         #endregion
 
+        private SpriteFont spriteFont;
+        private Texture2D heartSprite;
 
         private readonly List<Label> labels = new();
         private readonly List<Button> buttons = new();
+
+        private readonly List<Image> healthBarImages = new();
 
 
         Label myScoreLabel;
@@ -53,9 +57,21 @@ namespace TankoholicClient
             buttons.Add(disconnectButton);
         }
 
+
+        public void LoadContent(ContentManager content)
+        {
+            spriteFont = content.Load<SpriteFont>("Font");
+            heartSprite = content.Load<Texture2D>("Heart");
+        }
+
         public void Update(MouseState currentMouseState, MouseState lastMouseState)
         {
             CheckButtonOnClick(currentMouseState, lastMouseState);
+
+            for (int i =0; i< GameManager.Instance.player.Tank.CurrentHealth; i++)
+            {
+
+            }
         }
 
         public void CheckButtonOnClick(MouseState currentMouseState, MouseState lastMouseState)
@@ -74,7 +90,7 @@ namespace TankoholicClient
             }
         }
 
-        public void Draw(ref SpriteBatch spriteBatch, ref Texture2D rectangleBlock, ref SpriteFont spriteFont)
+        public void Draw(ref SpriteBatch spriteBatch, ref Texture2D rectangleBlock)
         {
             foreach(Button button in buttons)
             {
@@ -85,5 +101,11 @@ namespace TankoholicClient
             {
                 label.Draw(ref spriteBatch, ref rectangleBlock, ref spriteFont);
             }
-        }    }
+
+            foreach (Image image in healthBarImages)
+            {
+                image.Draw(ref spriteBatch, ref rectangleBlock);
+            }
+        }       
+    }
 }

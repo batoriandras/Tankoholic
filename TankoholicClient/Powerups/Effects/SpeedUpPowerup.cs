@@ -8,6 +8,6 @@ namespace TankoholicClient
 {
     public class SpeedUpPowerup : PowerupEffectTemporary
     {
-        public int speed = 3;
+        public int speed = 4;
     }
 }

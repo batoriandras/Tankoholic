@@ -13,8 +13,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Managers\**" />
+    <Compile Remove="Network\**" />
     <EmbeddedResource Remove="Managers\**" />
+    <EmbeddedResource Remove="Network\**" />
     <None Remove="Managers\**" />
+    <None Remove="Network\**" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Content\AmericanCaptain-MdEY.otf" />
@@ -31,9 +34,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TankoholicLibrary\TankoholicLibrary.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Network\" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Content\File.spritefont">

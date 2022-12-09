@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using TankoholicClassLibrary;
+using TankoholicClient.Powerups;
 
 namespace TankoholicClient
 {
@@ -13,6 +14,7 @@ namespace TankoholicClient
         List<Tank> otherTanks = new List<Tank>();
 
         public Player player = new Player(1, "Me");
+
 
 
         private MouseState lastMouseState;
@@ -35,6 +37,7 @@ namespace TankoholicClient
         public void Initialize()
         {
             MapManager.Instance.Initialize();
+            PowerupManager.Instance.Initialize();
         }
 
         public void Update()
@@ -49,12 +52,9 @@ namespace TankoholicClient
             lastMouseState = Mouse.GetState();
 
             Player.OtherPlayers.Values.ToList().ForEach(otherPlayer => CollisionManager.Instance.ResolveCollision(player.Tank, otherPlayer.Tank));
-            /*
-            if (Player.OtherPlayers.TryGetValue(ClientNetworkManager.Instance.Client.Id, out Player localPlayer))
-            {
-                localPlayer.Update(Keyboard.GetState());
-            }
-            */
+
+            PowerupManager.Instance.Update();
+        
         }
 
         public void Draw(ref SpriteBatch spriteBatch, ref Texture2D rectangleBlock)
@@ -70,6 +70,8 @@ namespace TankoholicClient
                         new Rectangle((int)player.Tank.Position.X, (int)player.Tank.Position.Y,
                                       40, 40), Color.Blue);
             }
+
+            PowerupManager.Instance.Draw(ref spriteBatch, ref rectangleBlock);
         }
     }
 }
