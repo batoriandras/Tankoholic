@@ -80,6 +80,7 @@ namespace TankoholicClient
                 localPlayer.Update(Keyboard.GetState());
             }
             */
+            EntityManager.ClearEntityTrashcan();
         }
 
         public void Draw(ref SpriteBatch spriteBatch, ref Texture2D rectangleBlock)

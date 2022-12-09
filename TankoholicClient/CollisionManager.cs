@@ -93,7 +93,7 @@ namespace TankoholicClient
 
         private void TankHitWithBullet(Bullet bullet, Tank tank)
         {
-            //GameManager.Bullets.Remove(bullet);
+            EntityManager.EntityTrashcan.Add(bullet);
             tank.LoseHealth();
         }
     }

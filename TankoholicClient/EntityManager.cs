@@ -11,6 +11,7 @@ public class EntityManager
     public static Tank Tank;
     public static List<Tank> OtherTanks = new();
     public static List<Bullet> Bullets = new();
+    public static List<Entity> EntityTrashcan = new();
 
     public static void SpawnPlayerTank()
     {
@@ -25,6 +26,18 @@ public class EntityManager
         MessageSender.SendSpawn(bullet);
     }
 
+    public static void ClearEntityTrashcan()
+    {
+        foreach (var entity in EntityTrashcan)
+        {
+            if (entity is Bullet)
+            {
+                Bullets.Remove((Bullet)entity);
+            }
+        }
+        EntityTrashcan.Clear();
+    }
+    
     [MessageHandler((ushort)MessageIds.PLAYER_POSITION)]
     private static void HandlePosition(Message message)
     {
