@@ -20,6 +20,7 @@ namespace TankoholicClient
             collisionShape = CollisionShape.Circle;
             Width = 40;
             Health = 4;
+            PlayerId = playerId;
         }
 
         public int Speed { get; private set; } = 2;

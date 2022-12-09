@@ -17,7 +17,11 @@ namespace TankoholicClient
 
         public static void SendPosition(Player player)
         {
-            Message message = Message.Create(MessageSendMode.Unreliable, (ushort)MessageIds.PLAYER_POSITION);
+            if (player.Tank is null)
+            {
+                return;
+            }
+            Message message = Message.Create(MessageSendMode.Reliable, (ushort)MessageIds.PLAYER_POSITION);
             message.AddFloats(new float[] { player.Tank.Position.X, player.Tank.Position.Y });
             _messages.Add(message);
         }

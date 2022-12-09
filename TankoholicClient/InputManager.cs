@@ -42,7 +42,7 @@ namespace TankoholicClient
 
             
 
-           EntityManager.Tank.SetVelocity(direction);
+            EntityManager.Tank.SetVelocity(direction);
 
             if (direction.Length() != 0)
             {

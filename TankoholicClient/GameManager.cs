@@ -53,8 +53,6 @@ namespace TankoholicClient
             timer = new Timer(1000);
             timer.Elapsed += OnTimedEvent;
             timer.AutoReset = true;
-            player = new Player(ClientNetworkManager.Instance.Client.Id, "János");
-            EntityManager.SpawnPlayerTank();
         }
 
         public void Update()
@@ -102,6 +100,10 @@ namespace TankoholicClient
         {
             MapManager.Instance.Draw(ref spriteBatch, ref rectangleBlock);
 
+            if (EntityManager.Tank is null)
+            {
+                return;
+            }
             EntityManager.Tank.Draw(ref spriteBatch, ref rectangleBlock);
             /* Ideiglenesen tesztelésre */
             foreach (var tank in EntityManager.OtherTanks)

@@ -16,7 +16,6 @@ public class EntityManager
     {
         Tank = new Tank(new Vector2(100, 100), ClientNetworkManager.Instance.Client.Id);
         GameManager.Instance.player.SetTank(Tank);
-        MessageSender.SendSpawn(GameManager.Instance.player);
     }
 
     [MessageHandler((ushort)MessageIds.PLAYER_POSITION)]
@@ -41,21 +40,17 @@ public class EntityManager
         var username = message.GetString();
 
         /* Ha valakinek van erre valami jobb megoldása akkor ne legyen rest átírni */
-        if (ids.Length == 1)
+
+        foreach (var id in ids)
         {
-            Tank = new Tank(new Vector2(100, 100), ids[0]);
-        }
-        else
-        {
-            if(OtherTanks.Count == 1)
+            if (id == ClientNetworkManager.Instance.Client.Id)
             {
-                var id = ids[0] == ClientNetworkManager.Instance.Client.Id ? ids[1] : ids[0];
-                OtherTanks.Add(new Tank(new Vector2(100, 100), id));
+                GameManager.Instance.player = new Player(id, username);
+                SpawnPlayerTank();
             }
             else
             {
-                foreach (var id in ids)
-                    OtherTanks.Add(new Tank(new Vector2(100, 100), id));
+                OtherTanks.Add(new Tank(new Vector2(100, 100), id));
             }
         }
     }
