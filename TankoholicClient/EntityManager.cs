@@ -10,12 +10,19 @@ public class EntityManager
 {
     public static Tank Tank;
     public static List<Tank> OtherTanks = new();
-    public List<Bullet> Bullets = new();
+    public static List<Bullet> Bullets = new();
 
     public static void SpawnPlayerTank()
     {
         Tank = new Tank(new Vector2(100, 100), ClientNetworkManager.Instance.Client.Id);
         GameManager.Instance.player.SetTank(Tank);
+    }
+
+    public static void SpawnBullet(Vector2 direction)
+    {
+        Bullet bullet = Tank.Shoot(direction);
+        Bullets.Add(bullet);
+        MessageSender.SendSpawn(bullet);
     }
 
     [MessageHandler((ushort)MessageIds.PLAYER_POSITION)]
@@ -34,7 +41,7 @@ public class EntityManager
     }
 
     [MessageHandler((ushort)MessageIds.PLAYER_SPAWN)]
-    private static void HandleSpawn(Message message)
+    private static void HandlePlayerSpawn(Message message)
     {
         var ids = message.GetUShorts();
         var username = message.GetString();
@@ -53,5 +60,17 @@ public class EntityManager
                 OtherTanks.Add(new Tank(new Vector2(100, 100), id));
             }
         }
+    }
+    [MessageHandler((ushort)MessageIds.BULLET_SPAWN)]
+    private static void HandleBulletSpawn(Message message)
+    {
+        var position = message.GetFloats();
+        var direction = message.GetFloats();
+        var playerId = message.GetUShort();
+
+        Bullets.Add(new Bullet(
+            new Vector2(position[0], position[1]), 
+            new Vector2(direction[0], direction[1]), 
+            playerId));
     }
 }

@@ -54,7 +54,7 @@ namespace TankoholicClient
            
         }
 
-        public Bullet ShootInput(KeyboardState keyboardInput, MouseState mouseInput)
+        public void ShootInput(KeyboardState keyboardInput, MouseState mouseInput)
         {
             Vector2 mouseDirection;
             if (keyboardInput.IsKeyDown(Keys.Space))
@@ -62,9 +62,8 @@ namespace TankoholicClient
                 mouseDirection = Vector2.Normalize(
                     mouseInput.Position.ToVector2() - EntityManager.Tank.Position
                     );
-                return EntityManager.Tank.Shoot(mouseDirection);
+                EntityManager.SpawnBullet(mouseDirection);
             }
-            return null;
         }
         public void MouseInput(MouseState mouseInput)
         {
