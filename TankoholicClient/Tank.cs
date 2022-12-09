@@ -39,7 +39,7 @@ namespace TankoholicClient
 
         public Bullet Shoot(Vector2 direction)
         {
-            return new Bullet(Position, direction, GameManager.Instance.player.Id);
+            return new Bullet(Position, direction, EntityManager.Tank.PlayerId);
         }
 
         public void ToggleCanShoot()

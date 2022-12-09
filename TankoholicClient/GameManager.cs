@@ -15,9 +15,9 @@ namespace TankoholicClient
         List<Tank> otherTanks = new List<Tank>();
         public static List<Bullet> Bullets = new();
         private Timer timer;
+        public Player player;
 
-        public Player player = new Player(1, "Me");
-
+        
         private MouseState lastMouseState;
 
         #region Singleton
@@ -53,21 +53,22 @@ namespace TankoholicClient
             timer = new Timer(1000);
             timer.Elapsed += OnTimedEvent;
             timer.AutoReset = true;
+            player = new Player(ClientNetworkManager.Instance.Client.Id, "János");
+            EntityManager.SpawnPlayerTank();
         }
 
         public void Update()
         {
-            Player.OtherPlayers.TryGetValue(ClientNetworkManager.Instance.Client.Id, out Player playerFromServer);
-            if (playerFromServer is not null)
+            if (EntityManager.Tank is null)
             {
-                player = playerFromServer;
+                return;
             }
             InputManager.Instance.KeyboardInput(Keyboard.GetState());
             InputManager.Instance.MouseInput(Mouse.GetState());
-            if (player.Tank.CanShoot && Keyboard.GetState().IsKeyDown(Keys.Space))
+            if (EntityManager.Tank.CanShoot && Keyboard.GetState().IsKeyDown(Keys.Space))
             {
                 timer.Start();
-                player.Tank.ToggleCanShoot();
+                EntityManager.Tank.ToggleCanShoot();
                 Bullet bullet = InputManager.Instance.ShootInput(Keyboard.GetState(), Mouse.GetState());
                 Bullets.Add(bullet);
                 MessageSender.SendSpawn(bullet);
@@ -75,7 +76,7 @@ namespace TankoholicClient
             otherTanks.ForEach(tank => tank.Update());
 
             MapManager.Instance.Update();
-            player.Tank.Update();
+            EntityManager.Tank.Update();
             Bullets.ForEach(bullet => bullet.Update());
             Bullets.ForEach(MessageSender.SendPosition);
 
@@ -83,12 +84,12 @@ namespace TankoholicClient
 
             lastMouseState = Mouse.GetState();
 
-            Bullets.ForEach(bullet => CollisionManager.Instance.ResolveCollision(bullet, player.Tank));
+            Bullets.ForEach(bullet => CollisionManager.Instance.ResolveCollision(bullet, EntityManager.Tank));
             for (int i = 0; i < Bullets.Count; i++)
             {
-                Player.OtherPlayers.Values.ToList().ForEach(player => CollisionManager.Instance.ResolveCollision(Bullets[i], player.Tank));
+                EntityManager.OtherTanks.ForEach(tank => CollisionManager.Instance.ResolveCollision(Bullets[i], tank));
             }
-            Player.OtherPlayers.Values.ToList().ForEach(otherPlayer => CollisionManager.Instance.ResolveCollision(player.Tank, otherPlayer.Tank));
+            EntityManager.OtherTanks.ForEach(tank => CollisionManager.Instance.ResolveCollision(tank, tank));
             /*
             if (Player.OtherPlayers.TryGetValue(ClientNetworkManager.Instance.Client.Id, out Player localPlayer))
             {
@@ -101,12 +102,12 @@ namespace TankoholicClient
         {
             MapManager.Instance.Draw(ref spriteBatch, ref rectangleBlock);
 
-            player.Tank.Draw(ref spriteBatch, ref rectangleBlock);
+            EntityManager.Tank.Draw(ref spriteBatch, ref rectangleBlock);
             /* Ideiglenesen tesztelésre */
-            foreach (var player in Player.OtherPlayers.Values)
+            foreach (var tank in EntityManager.OtherTanks)
             {
                 spriteBatch.Draw(rectangleBlock,
-                    new Rectangle((int)player.Tank.Position.X, (int)player.Tank.Position.Y,
+                    new Rectangle((int)tank.Position.X, (int)tank.Position.Y,
                         40, 40), Color.Blue);
             }
             foreach (var item in Bullets)
@@ -117,7 +118,7 @@ namespace TankoholicClient
 
         private void OnTimedEvent(Object source, ElapsedEventArgs e)
         {
-            player.Tank.ToggleCanShoot();
+            EntityManager.Tank.ToggleCanShoot();
             ((Timer)source).Stop();
         }
     }

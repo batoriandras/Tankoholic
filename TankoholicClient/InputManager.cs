@@ -42,7 +42,7 @@ namespace TankoholicClient
 
             
 
-            GameManager.Instance.player.Tank.SetVelocity(direction);
+           EntityManager.Tank.SetVelocity(direction);
 
             if (direction.Length() != 0)
             {
@@ -60,9 +60,9 @@ namespace TankoholicClient
             if (keyboardInput.IsKeyDown(Keys.Space))
             {
                 mouseDirection = Vector2.Normalize(
-                    mouseInput.Position.ToVector2() - GameManager.Instance.player.Tank.Position
+                    mouseInput.Position.ToVector2() - EntityManager.Tank.Position
                     );
-                return GameManager.Instance.player.Tank.Shoot(mouseDirection);
+                return EntityManager.Tank.Shoot(mouseDirection);
             }
             return null;
         }
