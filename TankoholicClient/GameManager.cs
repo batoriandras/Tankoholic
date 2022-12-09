@@ -13,7 +13,7 @@ namespace TankoholicClient
     public sealed class GameManager
     {
         List<Tank> otherTanks = new List<Tank>();
-        public static readonly List<Bullet> Bullets = new();
+        public static List<Bullet> Bullets = new();
         private Timer timer;
 
         public Player player = new Player(1, "Me");
@@ -57,6 +57,11 @@ namespace TankoholicClient
 
         public void Update()
         {
+            Player.OtherPlayers.TryGetValue(ClientNetworkManager.Instance.Client.Id, out Player playerFromServer);
+            if (playerFromServer is not null)
+            {
+                player = playerFromServer;
+            }
             InputManager.Instance.KeyboardInput(Keyboard.GetState());
             InputManager.Instance.MouseInput(Mouse.GetState());
             if (player.Tank.CanShoot && Keyboard.GetState().IsKeyDown(Keys.Space))
@@ -79,9 +84,9 @@ namespace TankoholicClient
             lastMouseState = Mouse.GetState();
 
             Bullets.ForEach(bullet => CollisionManager.Instance.ResolveCollision(bullet, player.Tank));
-            foreach (Player player in Player.OtherPlayers.Values)
+            for (int i = 0; i < Bullets.Count; i++)
             {
-                Bullets.ForEach(bullet => CollisionManager.Instance.ResolveCollision(bullet, player.Tank));
+                Player.OtherPlayers.Values.ToList().ForEach(player => CollisionManager.Instance.ResolveCollision(Bullets[i], player.Tank));
             }
             Player.OtherPlayers.Values.ToList().ForEach(otherPlayer => CollisionManager.Instance.ResolveCollision(player.Tank, otherPlayer.Tank));
             /*

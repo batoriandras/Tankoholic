@@ -22,7 +22,7 @@ namespace TankoholicClassLibrary
         {
             Id = id;
             Username = username;
-            Tank = new Tank(position: new Vector2(100, 100));
+            Tank = new Tank(position: new Vector2(100, 100), Id);
             pencil = new Pencil(Id, Microsoft.Xna.Framework.Color.Gray);
         }
 

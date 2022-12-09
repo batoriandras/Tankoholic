@@ -12,7 +12,8 @@ namespace TankoholicClient
 { 
     public class Tank : Entity
     {
-        public Tank(Vector2 position)
+        public ushort PlayerId { get; private set; }
+        public Tank(Vector2 position, ushort playerId)
         {
             CanShoot = true;
             Position = position;

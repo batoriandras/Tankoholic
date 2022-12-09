@@ -71,7 +71,7 @@ namespace TankoholicClient
                     ResolveCircle(entity1, entity2);
                 }
 
-                if (entity1 is Bullet && entity2 is Tank && ((Bullet)entity1).PlayerId != GameManager.Instance.player.Id)
+                if (entity1 is Bullet && entity2 is Tank && ((Bullet)entity1).PlayerId != ((Tank)entity2).PlayerId)
                 {
                     TankHitWithBullet((Bullet)entity1, (Tank)entity2);
                 }
@@ -93,7 +93,7 @@ namespace TankoholicClient
 
         private void TankHitWithBullet(Bullet bullet, Tank tank)
         {
-            GameManager.Bullets.Remove(bullet);
+            //GameManager.Bullets.Remove(bullet);
             tank.LoseHealth();
         }
     }
