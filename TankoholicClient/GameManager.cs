@@ -67,7 +67,7 @@ namespace TankoholicClient
             {
                 EntityManager.OtherTanks.ForEach(tank => CollisionManager.Instance.ResolveCollision(EntityManager.Bullets[i], tank));
             }
-            EntityManager.OtherTanks.ForEach(tank => CollisionManager.Instance.ResolveCollision(tank, tank));
+            EntityManager.OtherTanks.ForEach(tank => CollisionManager.Instance.ResolveCollision(EntityManager.Tank, tank));
             /*
             if (Player.OtherPlayers.TryGetValue(ClientNetworkManager.Instance.Client.Id, out Player localPlayer))
             {
