@@ -12,10 +12,7 @@ namespace TankoholicClient
 {
     public sealed class GameManager
     {
-        List<Tank> otherTanks = new List<Tank>();
-        private Timer timer;
         public Player player;
-
         
         private MouseState lastMouseState;
 
@@ -34,13 +31,10 @@ namespace TankoholicClient
         }
         #endregion
 
-
         public void Initialize()
         {
             MapManager.Instance.Initialize();
-            timer = new Timer(1000);
-            timer.Elapsed += OnTimedEvent;
-            timer.AutoReset = true;
+            EntityManager.InitializeTimer();
         }
 
         public void Update()
@@ -53,11 +47,11 @@ namespace TankoholicClient
             InputManager.Instance.MouseInput(Mouse.GetState());
             if (EntityManager.Tank.CanShoot && Keyboard.GetState().IsKeyDown(Keys.Space))
             {
-                timer.Start();
+                EntityManager.StartTimer();
                 EntityManager.Tank.ToggleCanShoot();
                 InputManager.Instance.ShootInput(Keyboard.GetState(), Mouse.GetState());
             }
-            otherTanks.ForEach(tank => tank.Update());
+            EntityManager.OtherTanks.ForEach(tank => tank.Update());
 
             MapManager.Instance.Update();
             EntityManager.Tank.Update();
@@ -105,10 +99,6 @@ namespace TankoholicClient
             }
         }
 
-        private void OnTimedEvent(Object source, ElapsedEventArgs e)
-        {
-            EntityManager.Tank.ToggleCanShoot();
-            ((Timer)source).Stop();
-        }
+
     }
 }
