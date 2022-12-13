@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 
 namespace TankoholicClient
 {
@@ -10,9 +11,18 @@ namespace TankoholicClient
 
         private readonly ITile[,] map = new ITile[GameConstants.CELLS_HORIZONTALLY_COUNT, GameConstants.CELLS_VERTICALLY_COUNT];
 
+
+        private readonly List<UnpassableTile> unpassableTiles = new List<UnpassableTile>();
+
+        public List<UnpassableTile> UnpassableTiles { get => unpassableTiles; }
+
         public void SetTile(int x, int y, ITile tile)
         {
             map[x, y] = tile;
+            if (tile is UnpassableTile t)
+            {
+                unpassableTiles.Add(t);
+            }
         }
 
         public void GenerateField()

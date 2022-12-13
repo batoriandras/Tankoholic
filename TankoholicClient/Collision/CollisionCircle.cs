@@ -22,6 +22,9 @@ namespace TankoholicClient
             }
         }
         public float Radius { get; set; }
+        public float Width { get => Radius*2; set => Radius = value/2; }
+        public float Height { get => Radius * 2; set => Radius = value / 2; }
+
         public CollisionCircle(float radius, Vector2 position)
         {
             Radius = radius;

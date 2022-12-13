@@ -49,6 +49,12 @@ namespace TankoholicClient
             lastMouseState = Mouse.GetState();
 
             Player.OtherPlayers.Values.ToList().ForEach(otherPlayer => CollisionManager.Instance.ResolveCollision(player.Tank, otherPlayer.Tank));
+
+
+            MapManager.Instance.UnpassableTiles.ForEach(unpassableTile => CollisionManager.Instance.ResolveCollision(player.Tank, unpassableTile));
+
+
+
             /*
             if (Player.OtherPlayers.TryGetValue(ClientNetworkManager.Instance.Client.Id, out Player localPlayer))
             {
