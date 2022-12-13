@@ -18,6 +18,9 @@ namespace TankoholicClient
         public float InitialSpeed { get; private set; } = 2.8f;
         public float CurrentSpeed { get; private set; } = 2.8f;
 
+        public float InitialDamage { get; private set; } = 5;
+        public float CurrentDamage { get; private set; } = 5;
+
         public Vector2 Velocity { get; private set; }
         public int MaxHealth { get; private set; } = 4;
 
@@ -43,7 +46,7 @@ namespace TankoholicClient
 
         void Shoot()
         {
-
+            Bullet bullet = Bullet(new Vector2(0, 0), new Vector2(0, 0), CurrentDamage);
         }
 
         public override void Update()
@@ -78,6 +81,17 @@ namespace TankoholicClient
                     {
                         Sprite = new ColorSprite(Color.Black);
                         CurrentSpeed = InitialSpeed;
+                        DisposePowerup();
+                    };
+                }
+                if (AppliedPowerup is BulletPowerup bulletPowerup)
+                {
+                    CurrenDamage = bulletPowerup.damage;
+                    Sprite = new ColorSprite(Color.Blue);
+                    bulletPowerup.OnEnd = delegate ()
+                    {
+                        Sprite = new ColorSprite(Color.Black);
+                        CurrentDamage = InitialDamage;
                         DisposePowerup();
                     };
                 }

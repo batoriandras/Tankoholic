@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace TankoholicClient
 {
-    public class HealthPowerup : PowerupEffectPermanent
+    public class BulletPowerup : PowerupEffectTemporary
     {
-        public int healthRegain = 2;
+        public int damage = 10;
     }
 }

@@ -12,11 +12,15 @@ namespace TankoholicClient
         public Vector2 Position { get; private set; }
         private Vector2 velocity;
         private const int MULTIPLIER = 10;
-        public Bullet(Vector2 position, Vector2 direction)
+        public int Damage { get; set; }
+        public Bullet(Vector2 position, Vector2 direction, int damage = 5)
         {
             Position = position;
             velocity = direction * MULTIPLIER;
+            this.Damage = damage;
         }
+
+
         public void Update()
         {
             Position += velocity;
