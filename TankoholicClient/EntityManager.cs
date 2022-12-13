@@ -83,9 +83,12 @@ public class EntityManager
         var direction = message.GetFloats();
         var playerId = message.GetUShort();
 
-        Bullets.Add(new Bullet(
-            new Vector2(position[0], position[1]), 
-            new Vector2(direction[0], direction[1]), 
-            playerId));
+        if (playerId != GameManager.Instance.player.Id)
+        {
+            Bullets.Add(new Bullet(
+                new Vector2(position[0], position[1]), 
+                new Vector2(direction[0], direction[1]), 
+                playerId));
+        }
     }
 }
