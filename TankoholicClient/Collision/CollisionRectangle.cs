@@ -13,6 +13,14 @@ namespace TankoholicClient
         public float Width { get; set; }
         public float Height { get; set; }
 
+        public CollisionRectangle(Vector2 position, float width, float height)
+        {
+            Position = position;
+            Width = width;
+            Height = height;
+        }
+
+
         public bool CheckCircleCollision(CollisionCircle otherCircle)
         {
             throw new NotImplementedException();

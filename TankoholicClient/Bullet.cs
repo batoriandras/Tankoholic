@@ -16,12 +16,12 @@ namespace TankoholicClient
         public int PlayerId { get; private set; }
         public Bullet(Vector2 position, Vector2 direction, int playerId)
         {
+            Width = 20;
+            Height = 20;
             Position = position;
             Direction = direction;
             velocity = direction * MULTIPLIER;
-            collisionShape = CollisionShape.Circle;
-            Width = 20;
-            Height = 20;
+            CollisionShape = new CollisionCircle(Width / 2, position);
             PlayerId = playerId;
         }
         public override void Update()

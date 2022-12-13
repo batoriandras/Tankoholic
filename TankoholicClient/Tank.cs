@@ -17,10 +17,11 @@ namespace TankoholicClient
         public ushort PlayerId { get; private set; }
         public Tank(Vector2 position, ushort playerId)
         {
+            Width = 40;
+            Height = 40;
+            CollisionShape = new CollisionCircle(Width / 2, position);
             CanShoot = true;
             Position = position;
-            collisionShape = CollisionShape.Circle;
-            Width = 40;
             Health = 4;
             PlayerId = playerId;
             shootingCooldown = 1;
@@ -78,12 +79,13 @@ namespace TankoholicClient
         public override void Update()
         {
             Position += Velocity;
+            CollisionShape.Position = Position;
         }
         public override void Draw(ref SpriteBatch spriteBatch, ref Texture2D rectangleBlock)
         {
             spriteBatch.Draw(rectangleBlock,
                 new Rectangle((int)Position.X, (int)Position.Y,
-                40, 40),
+                Width, Height),
                 Color.Black);
         }
     }
