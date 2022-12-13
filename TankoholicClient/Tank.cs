@@ -13,10 +13,13 @@ namespace TankoholicClient
     public class Tank : Entity
     {        
         private int shootingCooldown;
-        private Timer timer;
+        private Timer shootingTimer;
+        private Timer damageTakenTimer;
+        private Color color;
         public ushort PlayerId { get; private set; }
         public Tank(Vector2 position, ushort playerId)
         {
+            color = Color.Black;
             Width = 40;
             Height = 40;
             CollisionShape = new CollisionCircle(Width / 2, position);
@@ -25,7 +28,7 @@ namespace TankoholicClient
             Health = 4;
             PlayerId = playerId;
             shootingCooldown = 1;
-            InitializeShootingTimer();
+            InitializeTimers();
         }
 
         public int Speed { get; private set; } = 2;
@@ -37,6 +40,8 @@ namespace TankoholicClient
         public void LoseHealth()
         {
             Health--;
+            color = Color.Red;
+            damageTakenTimer.Start();
         }
         public void SetVelocity(Vector2 direction)
         {
@@ -48,10 +53,18 @@ namespace TankoholicClient
             return new Bullet(Position, direction, EntityManager.Tank.PlayerId);
         }
 
-        private void InitializeShootingTimer()
+        private void InitializeTimers()
         {
-            timer = new Timer(1000 * shootingCooldown);
-            timer.Elapsed += ShootingCooldownElapsed;
+            shootingTimer = new Timer(1000 * shootingCooldown);
+            shootingTimer.Elapsed += ShootingCooldownElapsed;
+
+            damageTakenTimer = new Timer(100);
+            damageTakenTimer.Elapsed += ChangeColorBackToNormal;
+        }
+
+        private void ChangeColorBackToNormal(object sender, ElapsedEventArgs e)
+        {
+            color = Color.Black;
         }
 
         private void ShootingCooldownElapsed(object sender, ElapsedEventArgs e)
@@ -62,7 +75,7 @@ namespace TankoholicClient
 
         public void StartTimer()
         {
-            timer.Start();
+            shootingTimer.Start();
             ToggleCanShoot();
         }
         private void ToggleCanShoot()
@@ -86,7 +99,7 @@ namespace TankoholicClient
             spriteBatch.Draw(rectangleBlock,
                 new Rectangle((int)Position.X, (int)Position.Y,
                 Width, Height),
-                Color.Black);
+                color);
         }
     }
 
