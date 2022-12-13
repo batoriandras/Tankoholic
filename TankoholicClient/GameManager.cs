@@ -34,7 +34,6 @@ namespace TankoholicClient
         public void Initialize()
         {
             MapManager.Instance.Initialize();
-            EntityManager.InitializeTimer();
         }
 
         public void Update()
@@ -47,8 +46,7 @@ namespace TankoholicClient
             InputManager.Instance.MouseInput(Mouse.GetState());
             if (EntityManager.Tank.CanShoot && Keyboard.GetState().IsKeyDown(Keys.Space))
             {
-                EntityManager.StartTimer();
-                EntityManager.Tank.ToggleCanShoot();
+                EntityManager.Tank.StartTimer();
                 InputManager.Instance.ShootInput(Keyboard.GetState(), Mouse.GetState());
             }
             EntityManager.OtherTanks.ForEach(tank => tank.Update());

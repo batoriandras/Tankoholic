@@ -11,7 +11,9 @@ using TankoholicClient;
 namespace TankoholicClient
 { 
     public class Tank : Entity
-    {
+    {        
+        private int shootingCooldown;
+        private Timer timer;
         public ushort PlayerId { get; private set; }
         public Tank(Vector2 position, ushort playerId)
         {
@@ -21,6 +23,8 @@ namespace TankoholicClient
             Width = 40;
             Health = 4;
             PlayerId = playerId;
+            shootingCooldown = 1;
+            InitializeShootingTimer();
         }
 
         public int Speed { get; private set; } = 2;
@@ -43,7 +47,24 @@ namespace TankoholicClient
             return new Bullet(Position, direction, EntityManager.Tank.PlayerId);
         }
 
-        public void ToggleCanShoot()
+        private void InitializeShootingTimer()
+        {
+            timer = new Timer(1000 * shootingCooldown);
+            timer.Elapsed += ShootingCooldownElapsed;
+        }
+
+        private void ShootingCooldownElapsed(object sender, ElapsedEventArgs e)
+        {
+            ToggleCanShoot();
+            ((Timer)sender).Stop();
+        }
+
+        public void StartTimer()
+        {
+            timer.Start();
+            ToggleCanShoot();
+        }
+        private void ToggleCanShoot()
         {
             if (CanShoot == true)
             {
@@ -54,12 +75,10 @@ namespace TankoholicClient
                 CanShoot = true;
             }
         }
-
         public override void Update()
         {
             Position += Velocity;
         }
-
         public override void Draw(ref SpriteBatch spriteBatch, ref Texture2D rectangleBlock)
         {
             spriteBatch.Draw(rectangleBlock,

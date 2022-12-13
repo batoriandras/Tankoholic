@@ -14,7 +14,6 @@ public class EntityManager
     public static List<Tank> OtherTanks = new();
     public static List<Bullet> Bullets = new();
     public static List<Entity> EntityTrashcan = new();
-    private static Timer timer;
 
     public static void SpawnPlayerTank()
     {
@@ -88,22 +87,5 @@ public class EntityManager
             new Vector2(position[0], position[1]), 
             new Vector2(direction[0], direction[1]), 
             playerId));
-    }
-
-    public static void InitializeTimer()
-    {
-        timer = new Timer(1000);
-        timer.Elapsed += OnTimedEvent;
-        timer.AutoReset = true;
-    }
-    private static void OnTimedEvent(Object source, ElapsedEventArgs e)
-    {
-        EntityManager.Tank.ToggleCanShoot();
-        ((Timer)source).Stop();
-    }
-
-    public static void StartTimer()
-    {
-        timer.Start();
     }
 }
