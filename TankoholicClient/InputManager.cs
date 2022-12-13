@@ -40,7 +40,9 @@ namespace TankoholicClient
                 direction += new Vector2(1, 0);
             }
 
-            GameManager.Instance.player.Tank.SetVelocity(direction);
+            
+
+            EntityManager.Tank.SetVelocity(direction);
 
             if (direction.Length() != 0)
             {
@@ -52,6 +54,17 @@ namespace TankoholicClient
            
         }
 
+        public void ShootInput(KeyboardState keyboardInput, MouseState mouseInput)
+        {
+            Vector2 mouseDirection;
+            if (keyboardInput.IsKeyDown(Keys.Space))
+            {
+                mouseDirection = Vector2.Normalize(
+                    mouseInput.Position.ToVector2() - EntityManager.Tank.Position
+                    );
+                EntityManager.SpawnBullet(mouseDirection);
+            }
+        }
         public void MouseInput(MouseState mouseInput)
         {
             if (mouseInput.RightButton == ButtonState.Pressed)

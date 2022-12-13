@@ -38,7 +38,7 @@ namespace TankoholicClient
 
             ClientNetworkManager.Instance.Initialize();
             ClientNetworkManager.Instance.Connect();
-
+            
             GameManager.Instance.Initialize();
             ComponentManager.Instance.Initialize(Content);
 
@@ -63,9 +63,6 @@ namespace TankoholicClient
             {
                 Exit();
             }
-
-            InputManager.Instance.KeyboardInput(Keyboard.GetState());
-            InputManager.Instance.MouseInput(Mouse.GetState());
 
             GameManager.Instance.Update();
 

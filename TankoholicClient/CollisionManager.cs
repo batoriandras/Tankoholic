@@ -70,6 +70,11 @@ namespace TankoholicClient
                 {
                     ResolveCircle(entity1, entity2);
                 }
+
+                if (entity1 is Bullet && entity2 is Tank && ((Bullet)entity1).PlayerId != ((Tank)entity2).PlayerId)
+                {
+                    TankHitWithBullet((Bullet)entity1, (Tank)entity2);
+                }
             }
             
         }
@@ -84,6 +89,12 @@ namespace TankoholicClient
             }
             Vector2 unit = new Vector2(centerDistance.X / length, centerDistance.Y / length);
             entity1.Position = entity2.Position + (unit * (radius_sum + 1));
+        }
+
+        private void TankHitWithBullet(Bullet bullet, Tank tank)
+        {
+            EntityManager.EntityTrashcan.Add(bullet);
+            tank.LoseHealth();
         }
     }
 }
