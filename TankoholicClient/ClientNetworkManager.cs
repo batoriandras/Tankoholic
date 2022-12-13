@@ -30,7 +30,6 @@ namespace TankoholicClient
             Client = new Client();
             Client.Connected += DidConnect;
             Client.ConnectionFailed += FailedToConnect;
-            Client.ClientDisconnected += (s, e) => Player.OtherPlayers.Remove(e.Id);
         
             
         }

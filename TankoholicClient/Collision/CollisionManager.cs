@@ -93,10 +93,16 @@ namespace TankoholicClient
                 {
                     ResolveCircle(entity1, entity2);
                 }
-
+                
                 else if (entity1 is Tank && entity2 is DrawnTile)
                 {
-                   // ResolveCircle(entity1, entity2);
+                    // ResolveCircle(entity1, entity2);
+                }
+
+                else if (entity1 is Bullet && entity2 is Tank && ((Bullet)entity1).PlayerId != ((Tank)entity2).PlayerId)
+                {
+                    EntityManager.EntityTrashcan.Add(entity1);
+                    ((Tank)entity2).LoseHealth();
                 }
             }
             
@@ -112,6 +118,12 @@ namespace TankoholicClient
             }
             Vector2 unit = new Vector2(centerDistance.X / length, centerDistance.Y / length);
             entity1.Position = entity2.Position + (unit * (radius_sum + 1));
+        }
+
+        private void TankHitWithBullet(Bullet bullet, Tank tank)
+        {
+            EntityManager.EntityTrashcan.Add(bullet);
+            tank.LoseHealth();
         }
     }
 }
