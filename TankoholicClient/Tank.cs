@@ -46,7 +46,7 @@ namespace TankoholicClient
 
         void Shoot()
         {
-            Bullet bullet = Bullet(new Vector2(0, 0), new Vector2(0, 0), CurrentDamage);
+            Bullet bullet = new Bullet(new Vector2(0, 0), new Vector2(0, 0), CurrentDamage);
         }
 
         public override void Update()
@@ -86,7 +86,7 @@ namespace TankoholicClient
                 }
                 if (AppliedPowerup is BulletPowerup bulletPowerup)
                 {
-                    CurrenDamage = bulletPowerup.damage;
+                    CurrentDamage = bulletPowerup.damage;
                     Sprite = new ColorSprite(Color.Blue);
                     bulletPowerup.OnEnd = delegate ()
                     {
