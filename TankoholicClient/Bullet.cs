@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
+using SharpDX.MediaFoundation;
 
 namespace TankoholicClient
 {
@@ -26,7 +27,21 @@ namespace TankoholicClient
         }
         public override void Update()
         {
-            Position += velocity;
+            Move();
+        }
+
+        private void Move()
+        {
+            Vector2 nextPosition = Position + velocity;
+            if (nextPosition.X + Width >= 0 && nextPosition.X  <= GameConstants.WINDOW_WIDTH &&
+                nextPosition.Y + Height >= 0 && nextPosition.Y <= GameConstants.WINDOW_HEIGHT)
+            {
+                Position += velocity;
+            }
+            else
+            {
+                EntityManager.EntityTrashcan.Add(this);
+            }
         }
 
         public override void Draw(ref SpriteBatch spriteBatch, ref Texture2D rectangleBlock)

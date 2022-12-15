@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using System.Timers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SharpDX.MediaFoundation;
 using TankoholicClient;
+using Timer = System.Timers.Timer;
 
 namespace TankoholicClient
 { 
@@ -91,9 +93,25 @@ namespace TankoholicClient
         }
         public override void Update()
         {
+            Move();
+        }
+
+        private void Move()
+        {
+            Vector2 nextPosition = Position + Velocity;
+            if (nextPosition.X < 0 || nextPosition.X + Width > GameConstants.WINDOW_WIDTH)
+            {
+                Velocity = new Vector2(0, Velocity.Y);
+            }
+
+            if (nextPosition.Y < 0 || nextPosition.Y + Height > GameConstants.WINDOW_HEIGHT)
+            {
+                Velocity = new Vector2(Velocity.X, 0);
+            }
             Position += Velocity;
             CollisionShape.Position = Position;
         }
+
         public override void Draw(ref SpriteBatch spriteBatch, ref Texture2D rectangleBlock)
         {
             spriteBatch.Draw(rectangleBlock,
