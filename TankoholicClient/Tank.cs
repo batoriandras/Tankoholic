@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Timers;
+﻿using System.Timers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using TankoholicClassLibrary;
+using Timer = System.Timers.Timer;
 
 namespace TankoholicClient
 {
     public class Tank : Entity
     {        
-        private int shootingCooldown;
+        private readonly int shootingCooldown;
         private Timer shootingTimer;
         private Timer damageTakenTimer;
         public ushort PlayerId { get; private set; }
@@ -21,7 +16,7 @@ namespace TankoholicClient
             Sprite = new ColorSprite(Color.Black);
             Width = 40;
             Height = 40;
-            CollisionShape = new CollisionCircle(position, Width / 2);
+            CollisionShape = new CollisionCircle(position, (float)Width / 2);
             CanShoot = true;
             Position = position;
             PlayerId = playerId;
@@ -127,20 +122,29 @@ namespace TankoholicClient
         }
         private void ToggleCanShoot()
         {
-            if (CanShoot == true)
-            {
-                CanShoot = false;
-            }
-            else
-            {
-                CanShoot = true;
-            }
+            CanShoot = !CanShoot;
         }
         public override void Update()
         {
+            Move();
+        }
+
+        private void Move()
+        {
+            Vector2 nextPosition = Position + Velocity;
+            if (nextPosition.X < 0 || nextPosition.X + Width > GameConstants.WINDOW_WIDTH)
+            {
+                Velocity = new Vector2(0, Velocity.Y);
+            }
+
+            if (nextPosition.Y < 0 || nextPosition.Y + Height > GameConstants.WINDOW_HEIGHT)
+            {
+                Velocity = new Vector2(Velocity.X, 0);
+            }
             Position += Velocity;
             CollisionShape.Position = Position;
         }
+
         public override void Draw(ref SpriteBatch spriteBatch, ref Texture2D rectangleBlock)
         {
             spriteBatch.Draw(rectangleBlock,

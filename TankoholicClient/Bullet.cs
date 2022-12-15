@@ -1,16 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace TankoholicClient
 {
     public class Bullet:Entity
     {
-        private Vector2 velocity;
+        private readonly Vector2 velocity;
         private const int MULTIPLIER = 10;
         public int Damage { get; set; }
         public Vector2 Direction { get; private set; }
@@ -24,14 +19,28 @@ namespace TankoholicClient
             velocity = direction * MULTIPLIER;
             this.Damage = damage;
 
-            CollisionShape = new CollisionCircle(position, Width / 2);
+            CollisionShape = new CollisionCircle(position, (float)Width / 2);
             PlayerId = playerId;
         }
 
 
         public override void Update()
         {
-            Position += velocity;
+            Move();
+        }
+
+        private void Move()
+        {
+            Vector2 nextPosition = Position + velocity;
+            if (nextPosition.X + Width >= 0 && nextPosition.X  <= GameConstants.WINDOW_WIDTH &&
+                nextPosition.Y + Height >= 0 && nextPosition.Y <= GameConstants.WINDOW_HEIGHT)
+            {
+                Position += velocity;
+            }
+            else
+            {
+                EntityManager.EntityTrashcan.Add(this);
+            }
         }
 
         public override void Draw(ref SpriteBatch spriteBatch, ref Texture2D rectangleBlock)

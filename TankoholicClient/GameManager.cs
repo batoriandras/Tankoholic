@@ -7,7 +7,7 @@ using System.Linq;
 using TankoholicClassLibrary;
 using System.Timers;
 using Riptide;
-using System.Security.Cryptography;
+using TankoholicClient.Collision;
 
 namespace TankoholicClient
 {

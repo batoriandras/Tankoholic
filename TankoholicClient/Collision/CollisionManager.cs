@@ -1,16 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace TankoholicClient
+namespace TankoholicClient.Collision
 {
     public class CollisionManager
     {
         #region Singleton
-        private static CollisionManager instance = null;
+        private static CollisionManager instance;
 
         private CollisionManager() { }
 
@@ -24,7 +20,7 @@ namespace TankoholicClient
         }
         #endregion
 
-        public bool CheckCollision(Entity entity1, Entity entity2)
+        private bool CheckCollision(Entity entity1, Entity entity2)
         {
             if(entity1.CollisionShape is CollisionCircle && entity2.CollisionShape is CollisionCircle)
             {
@@ -41,34 +37,36 @@ namespace TankoholicClient
             return false;
         }
 
-        private bool CollideCircleWithRectangle(Entity circleEntitiy, Entity rectangleEntity)
+        private bool CollideCircleWithRectangle(Entity circleEntity, Entity rectangleEntity)
         {
-            float x = Math.Abs(circleEntitiy.Position.X - rectangleEntity.Position.X + rectangleEntity.CollisionShape.Width / 2);
-            float y = Math.Abs(circleEntitiy.Position.Y - rectangleEntity.Position.Y + rectangleEntity.CollisionShape.Height / 2);
-            if (x > rectangleEntity.CollisionShape.Width / 2 + ((CollisionCircle)circleEntitiy.CollisionShape).Radius)
+            Vector2 distance = GetDistance(circleEntity, rectangleEntity);
+            float x = Math.Abs(distance.X);
+            float y = Math.Abs(distance.Y);
+            if (x >= rectangleEntity.CollisionShape.Width / 2 + ((CollisionCircle)circleEntity.CollisionShape).Radius)
             {
                 return false;
             }
-            if (y > rectangleEntity.CollisionShape.Height / 2 + ((CollisionCircle)circleEntitiy.CollisionShape).Radius)
+            if (y >= rectangleEntity.CollisionShape.Height / 2 + ((CollisionCircle)circleEntity.CollisionShape).Radius)
             {
                 return false;
             }
 
-            if (x <= rectangleEntity.CollisionShape.Width / 2)
+            if (x < rectangleEntity.CollisionShape.Width / 2 - 1)
             {
                 return true;
             }
 
-            if (y <= rectangleEntity.CollisionShape.Height / 2)
+            if (y < rectangleEntity.CollisionShape.Height / 2 - 1)
             {
                 return true;
             }
 
-            float cornerDistanceSq = (float)Math.Pow(x - rectangleEntity.CollisionShape.Width / 2, 2) +
-                                      (float)Math.Pow(y - rectangleEntity.CollisionShape.Height / 2, 2);
-            return cornerDistanceSq <= Math.Pow(((CollisionCircle)circleEntitiy.CollisionShape).Radius, 2);
+            Vector2 cornerDistance = new Vector2(x - rectangleEntity.CollisionShape.Width,
+                y - rectangleEntity.CollisionShape.Height);
+            float cornerDistanceLength = GetLenghtOfDistance(cornerDistance);
+            return cornerDistanceLength <= ((CollisionCircle)circleEntity.CollisionShape).Radius;
         }
-        private Vector2 GetCenterDistance(Entity entity1, Entity entity2)
+        private Vector2 GetDistance(Entity entity1, Entity entity2)
         {
             Vector2 entity1Center = entity1.CollisionShape.Position + new Vector2(entity1.CollisionShape.Width / 2, entity1.CollisionShape.Height / 2);
             Vector2 entity2Center = entity2.CollisionShape.Position + new Vector2(entity2.CollisionShape.Width / 2, entity2.CollisionShape.Height / 2);
@@ -83,7 +81,7 @@ namespace TankoholicClient
         private bool CollideCircles(Entity entity1, Entity entity2)
         {
             float radiusSq = (float)Math.Pow(entity1.CollisionShape.Width / 2 + entity2.CollisionShape.Width / 2, 2);
-            return GetLenghtOfDistance(GetCenterDistance(entity1, entity2)) <= Math.Sqrt(radiusSq);
+            return GetLenghtOfDistance(GetDistance(entity1, entity2)) <= Math.Sqrt(radiusSq);
         }
         public void ResolveCollision(Entity entity1, Entity entity2)
         {
@@ -94,18 +92,18 @@ namespace TankoholicClient
                     ResolveCircle(entity1, entity2);
                 }
                 
-                else if (entity1 is Tank && entity2 is DrawnTile)
+                else if (entity1 is Tank tank1 && entity2 is DrawnTile tile)
                 {
-                    ResolveCircleWithRectangle((Tank)entity1, (DrawnTile)entity2);
+                    ResolveCircleWithRectangle(tank1, tile);
                 }
 
                 else if (entity1 is Bullet bullet && entity2 is Tank tank && bullet.PlayerId != tank.PlayerId)
                 {
                     TankHitWithBullet(bullet, tank);
                 }
-                else if (entity1 is Bullet && entity2 is DrawnTile)
+                else if (entity1 is Bullet bullet1 && entity2 is DrawnTile drawnTile)
                 {
-                    BulletHitDrawnTile((Bullet)entity1, (DrawnTile)entity2);
+                    BulletHitDrawnTile(bullet1, drawnTile);
                 }
                 else if (entity1 is Tank tank2 && entity2 is PowerupEntity powerup)
                 {
@@ -124,38 +122,42 @@ namespace TankoholicClient
             EntityManager.EntityTrashcan.Add(entity2);
         }
 
-        private void ResolveCircleWithRectangle(Entity circleEntitiy, Entity rectangleEntity)
+        private void MoveTankOutOfTile(Tank tank, Vector2 velocity)
         {
-            if (circleEntitiy.CollisionShape.Position.X > rectangleEntity.CollisionShape.Position.X + rectangleEntity.CollisionShape.Width / 2)
+            tank.SetVelocity(velocity);
+            tank.Update();
+        }
+        private void ResolveCircleWithRectangle(Entity circleEntity, Entity rectangleEntity)
+        {
+            Vector2 distance = GetDistance(circleEntity, rectangleEntity);
+            switch (distance.X)
             {
-                circleEntitiy.Position += new Vector2(2, 0);
-            }else 
-            if (circleEntitiy.CollisionShape.Position.X < rectangleEntity.CollisionShape.Position.X)
-            {
-                circleEntitiy.Position -= new Vector2(2, 0);
-            }
-
-            if (circleEntitiy.CollisionShape.Position.Y > rectangleEntity.CollisionShape.Position.Y + rectangleEntity.CollisionShape.Height / 2)
-            {
-                circleEntitiy.Position += new Vector2(0, 2);
-            }else
-            if (circleEntitiy.CollisionShape.Position.Y < rectangleEntity.CollisionShape.Position.Y)
-            {
-                circleEntitiy.Position -= new Vector2(0, 2);
+                case <= 0 when distance.Y <= 0:
+                    MoveTankOutOfTile((Tank)circleEntity, new Vector2(-1, -1));
+                    return;
+                case <= 0 when distance.Y > 0:
+                    MoveTankOutOfTile((Tank)circleEntity, new Vector2(-1, 1));
+                    return;
+                case > 0 when distance.Y <= 0:
+                    MoveTankOutOfTile((Tank)circleEntity, new Vector2(1, -1));
+                    return;
+                case > 0 when distance.Y > 0:
+                    MoveTankOutOfTile((Tank)circleEntity, new Vector2(1, 1));
+                    return;
             }
         }
 
         private void ResolveCircle(Entity entity1, Entity entity2)
         {
-            float radius_sum = entity1.CollisionShape.Width / 2 + entity2.CollisionShape.Width / 2;
-            Vector2 centerDistance = GetCenterDistance(entity1, entity2);
+            float radiusSum = entity1.CollisionShape.Width / 2 + entity2.CollisionShape.Width / 2;
+            Vector2 centerDistance = GetDistance(entity1, entity2);
             float length = GetLenghtOfDistance(centerDistance);
             if(length == 0)
             {
                 length = 1;
             }
             Vector2 unit = new Vector2(centerDistance.X / length, centerDistance.Y / length);
-            entity1.Position = entity2.Position + (unit * (radius_sum + 1));
+            entity1.Position = entity2.Position + (unit * (radiusSum + 1));
         }
 
         private void TankHitWithBullet(Bullet bullet, Tank tank)
