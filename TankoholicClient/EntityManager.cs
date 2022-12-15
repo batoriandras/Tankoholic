@@ -14,6 +14,7 @@ public class EntityManager
     public static List<Tank> OtherTanks = new();
     public static List<Bullet> Bullets = new();
     public static List<Entity> EntityTrashcan = new();
+    public static List<UnpassableTile> UnpassableTiles = new();
 
     public static void SpawnPlayerTank()
     {
@@ -35,6 +36,12 @@ public class EntityManager
             if (entity is Bullet)
             {
                 Bullets.Remove((Bullet)entity);
+            }
+
+            if (entity is UnpassableTile)
+            {
+                UnpassableTiles.Remove((UnpassableTile)entity);
+                MapManager.Instance.RemoveDrawnTile((DrawnTile)entity);
             }
         }
         EntityTrashcan.Clear();

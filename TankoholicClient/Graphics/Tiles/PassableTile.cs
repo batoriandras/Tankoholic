@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace TankoholicClient
 {
-    public abstract class PassableTile : ITile {}
+    public abstract class PassableTile : ITile { }
 }

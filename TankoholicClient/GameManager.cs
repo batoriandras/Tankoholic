@@ -60,7 +60,7 @@ namespace TankoholicClient
 
             lastMouseState = Mouse.GetState();
 
-            MapManager.Instance.UnpassableTiles.ForEach(unpassableTile => CollisionManager.Instance.ResolveCollision(player.Tank, unpassableTile));
+            EntityManager.UnpassableTiles.ForEach(unpassableTile => CollisionManager.Instance.ResolveCollision(player.Tank, unpassableTile));
 
             EntityManager.Bullets.ForEach(bullet => CollisionManager.Instance.ResolveCollision(bullet, EntityManager.Tank));
             for (int i = 0; i < EntityManager.Bullets.Count; i++)
@@ -68,7 +68,10 @@ namespace TankoholicClient
                 EntityManager.OtherTanks.ForEach(tank => CollisionManager.Instance.ResolveCollision(EntityManager.Bullets[i], tank));
             }
             EntityManager.OtherTanks.ForEach(tank => CollisionManager.Instance.ResolveCollision(EntityManager.Tank, tank));
-
+            foreach (var bullet in EntityManager.Bullets)
+            {
+                EntityManager.UnpassableTiles.ForEach(unpassableTile => CollisionManager.Instance.ResolveCollision(bullet, unpassableTile));
+            }
             /*
             if (Player.OtherPlayers.TryGetValue(ClientNetworkManager.Instance.Client.Id, out Player localPlayer))
             {
