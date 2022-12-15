@@ -64,20 +64,9 @@ namespace TankoholicClient
                 return true;
             }
 
-            float cornerDistance_sq = (float)Math.Pow(x - rectangleEntity.Width / 2, 2) +
-                                      (float)Math.Pow(y - rectangleEntity.Height / 2, 2);
-            return cornerDistance_sq <= Math.Pow(((CollisionCircle)circleEntitiy.CollisionShape).Radius, 2);
-        }
-
-        private Vector2 GetLengthOfRectangleAndCircle(CollisionCircle cirlceShape, CollisionRectangle rectangleShape)
-        {
-            float nx = Math.Max(rectangleShape.Position.X,
-                Math.Min(rectangleShape.Position.X + rectangleShape.Width,
-                    cirlceShape.CenterPosition.X));
-            float ny = Math.Max(rectangleShape.Position.Y,
-                Math.Min(rectangleShape.Position.Y + rectangleShape.Height,
-                    cirlceShape.CenterPosition.Y));
-            return new Vector2(nx, ny);
+            float cornerDistanceSq = (float)Math.Pow(x - rectangleEntity.CollisionShape.Width / 2, 2) +
+                                      (float)Math.Pow(y - rectangleEntity.CollisionShape.Height / 2, 2);
+            return cornerDistanceSq <= Math.Pow(((CollisionCircle)circleEntitiy.CollisionShape).Radius, 2);
         }
         private Vector2 GetCenterDistance(Entity entity1, Entity entity2)
         {
@@ -108,15 +97,24 @@ namespace TankoholicClient
                 else if (entity1 is Tank && entity2 is DrawnTile)
                 {
                     ResolveCircleWithRectangle((Tank)entity1, (DrawnTile)entity2);
-                    // ResolveCircle(entity1, entity2);
                 }
 
                 else if (entity1 is Bullet bullet && entity2 is Tank tank && bullet.PlayerId != tank.PlayerId)
                 {
                     TankHitWithBullet(bullet, tank);
                 }
+                else if (entity1 is Bullet && entity2 is DrawnTile)
+                {
+                    BulletHitDrawnTile((Bullet)entity1, (DrawnTile)entity2);
+                }
             }
             
+        }
+
+        private void BulletHitDrawnTile(Bullet entity1, DrawnTile entity2)
+        {
+            EntityManager.EntityTrashcan.Add(entity1);
+            EntityManager.EntityTrashcan.Add(entity2);
         }
 
         private void ResolveCircleWithRectangle(Entity circleEntitiy, Entity rectangleEntity)
