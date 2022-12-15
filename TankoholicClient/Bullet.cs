@@ -1,17 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
-using SharpDX.MediaFoundation;
 
 namespace TankoholicClient
 {
     public class Bullet:Entity
     {
-        private Vector2 velocity;
+        private readonly Vector2 velocity;
         private const int MULTIPLIER = 10;
         public Vector2 Direction { get; private set; }
         public int PlayerId { get; private set; }
@@ -22,7 +16,7 @@ namespace TankoholicClient
             Position = position;
             Direction = direction;
             velocity = direction * MULTIPLIER;
-            CollisionShape = new CollisionCircle(Width / 2, position);
+            CollisionShape = new CollisionCircle((float)Width / 2, position);
             PlayerId = playerId;
         }
         public override void Update()

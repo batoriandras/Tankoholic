@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Timers;
+﻿using System.Timers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SharpDX.MediaFoundation;
-using TankoholicClient;
 using Timer = System.Timers.Timer;
 
 namespace TankoholicClient
 { 
     public class Tank : Entity
     {        
-        private int shootingCooldown;
+        private readonly int shootingCooldown;
+        private readonly int speed;
+        private int health;
+        private Vector2 velocity;
         private Timer shootingTimer;
         private Timer damageTakenTimer;
         private Color color;
@@ -22,32 +18,28 @@ namespace TankoholicClient
         public Tank(Vector2 position, ushort playerId)
         {
             color = Color.Black;
+            speed = 2;
             Width = 40;
             Height = 40;
-            CollisionShape = new CollisionCircle(Width / 2, position);
+            CollisionShape = new CollisionCircle((float)Width / 2, position);
             CanShoot = true;
             Position = position;
-            Health = 4;
+            health = 4;
             PlayerId = playerId;
             shootingCooldown = 1;
             InitializeTimers();
         }
-
-        public int Speed { get; private set; } = 2;
-
-        public Vector2 Velocity { get; private set; }
-        public int Health { get; private set; }
         public bool CanShoot { get; private set; }
 
         public void LoseHealth()
         {
-            Health--;
+            health--;
             color = Color.Red;
             damageTakenTimer.Start();
         }
         public void SetVelocity(Vector2 direction)
         {
-            Velocity = direction * Speed;
+            velocity = direction * speed;
         }
 
         public Bullet Shoot(Vector2 direction)
@@ -82,14 +74,7 @@ namespace TankoholicClient
         }
         private void ToggleCanShoot()
         {
-            if (CanShoot == true)
-            {
-                CanShoot = false;
-            }
-            else
-            {
-                CanShoot = true;
-            }
+            CanShoot = !CanShoot;
         }
         public override void Update()
         {
@@ -98,17 +83,17 @@ namespace TankoholicClient
 
         private void Move()
         {
-            Vector2 nextPosition = Position + Velocity;
+            Vector2 nextPosition = Position + velocity;
             if (nextPosition.X < 0 || nextPosition.X + Width > GameConstants.WINDOW_WIDTH)
             {
-                Velocity = new Vector2(0, Velocity.Y);
+                velocity = new Vector2(0, velocity.Y);
             }
 
             if (nextPosition.Y < 0 || nextPosition.Y + Height > GameConstants.WINDOW_HEIGHT)
             {
-                Velocity = new Vector2(Velocity.X, 0);
+                velocity = new Vector2(velocity.X, 0);
             }
-            Position += Velocity;
+            Position += velocity;
             CollisionShape.Position = Position;
         }
 
