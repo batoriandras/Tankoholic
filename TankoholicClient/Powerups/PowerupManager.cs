@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TankoholicClient.Powerups
+namespace TankoholicClient
 {
     public class PowerupManager
     {
@@ -31,6 +31,8 @@ namespace TankoholicClient.Powerups
         private int LifespanDuration { get; set; } = 24;
 
         private List<PowerupEntity> powerups = new List<PowerupEntity>();
+
+        public List<PowerupEntity> Powerups { get => powerups; }
 
         public void Initialize()
         {
@@ -58,7 +60,7 @@ namespace TankoholicClient.Powerups
 
         public void RemovePowerup(int id)
         {
-            powerups.Where(x => x.Id == id).ToList().ForEach(x=> powerups.Remove(x));
+            EntityManager.EntityTrashcan.AddRange(powerups.Where(x => x.Id == id));
         }
 
         public void Update()

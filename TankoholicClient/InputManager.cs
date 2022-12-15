@@ -40,18 +40,38 @@ namespace TankoholicClient
                 direction += new Vector2(1, 0);
             }
 
-            GameManager.Instance.player.Tank.SetVelocity(direction);
+            
+
+            EntityManager.Tank.SetVelocity(direction);
 
             if (direction.Length() != 0)
             {
                 
 
-                MessageSender.SendPosition(GameManager.Instance.player);
+                MessageSender.SendPosition(GameManager.Instance.Player);
             }
 
            
         }
 
+        MouseState lastMouseInput;
+
+        public void ShootInput(KeyboardState keyboardInput, MouseState mouseInput)
+        {
+            Vector2 mouseDirection;
+            if (EntityManager.Tank.CanShoot 
+         //   && lastMouseInput.LeftButton == ButtonState.Pressed
+            && mouseInput.LeftButton == ButtonState.Pressed)
+            {
+                mouseDirection = Vector2.Normalize(
+                    mouseInput.Position.ToVector2() - EntityManager.Tank.Position
+                    );
+                EntityManager.SpawnBullet(mouseDirection);
+                EntityManager.Tank.StartTimer();
+            }
+
+            lastMouseInput = mouseInput;
+        }
         public void MouseInput(MouseState mouseInput)
         {
             if (mouseInput.RightButton == ButtonState.Pressed)

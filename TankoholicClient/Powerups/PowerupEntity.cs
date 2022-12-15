@@ -26,9 +26,10 @@ namespace TankoholicClient
             this.Effect = effect;
             this.Position = position;
             Sprite = new ColorSprite(Color.Violet);
-            collisionShape = CollisionShape.Circle;
+            
             Width = 22;
             Height = 22;
+            CollisionShape = new CollisionRectangle(position, Width, Height);
         }
 
         public static PowerupEntity RandomPowerup()

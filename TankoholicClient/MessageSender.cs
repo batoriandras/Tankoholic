@@ -17,8 +17,27 @@ namespace TankoholicClient
 
         public static void SendPosition(Player player)
         {
-            Message message = Message.Create(MessageSendMode.Unreliable, (ushort)MessageIds.PLAYER_POSITION);
+            if (player.Tank is null)
+            {
+                return;
+            }
+            Message message = Message.Create(MessageSendMode.Reliable, (ushort)MessageIds.PLAYER_POSITION);
             message.AddFloats(new float[] { player.Tank.Position.X, player.Tank.Position.Y });
+            _messages.Add(message);
+        }
+
+        public static void SendSpawn(Bullet bullet)
+        {
+            Message message = Message.Create(MessageSendMode.Reliable, (ushort)MessageIds.BULLET_SPAWN);
+            message.AddFloats(new float[] { bullet.Position.X, bullet.Position.Y });
+            message.AddFloats(new float[] { bullet.Direction.X, bullet.Direction.Y });
+            message.AddUShort((ushort)bullet.PlayerId);
+            _messages.Add(message);
+        }
+        public static void SendPosition(Bullet bullet)
+        {
+            Message message = Message.Create(MessageSendMode.Unreliable, (ushort)MessageIds.BULLET_POSITION);
+            message.AddFloats(new float[] { bullet.Position.X, bullet.Position.Y });
             _messages.Add(message);
         }
 

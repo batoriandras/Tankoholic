@@ -1,8 +1,10 @@
-﻿using Microsoft.VisualBasic.Devices;
+﻿using System;
+using Microsoft.VisualBasic.Devices;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using System.Windows.Forms.VisualStyles;
 
 namespace TankoholicClient
 {
@@ -14,6 +16,10 @@ namespace TankoholicClient
         public void SetTile(int x, int y, ITile tile)
         {
             map[x, y] = tile;
+            if (tile is UnpassableTile t)
+            {
+                EntityManager.UnpassableTiles.Add(t);
+            }
         }
 
         public void GenerateField()
@@ -68,9 +74,10 @@ namespace TankoholicClient
                     {
                         (map[x, y] as GrassTile).Draw(ref spriteBatch, ref rectangleBlock);
                     }
-                    else if(map[x, y] is DrawnTile)
+                    
+                    else if (map[x, y] is UnpassableTile)
                     {
-                        (map[x, y] as DrawnTile).Draw(ref spriteBatch, ref rectangleBlock);
+                        (map[x, y] as UnpassableTile).Draw(ref spriteBatch, ref rectangleBlock);
                     }
 
                     else
@@ -110,11 +117,24 @@ namespace TankoholicClient
                     {
                         if (map[x,y] is GrassTile)
                         {
-                            SetTile(x, y, DrawnTile.FromPencil(GameManager.Instance.player.pencil, new Vector2(x * GameConstants.CELL_SIZE, y * GameConstants.CELL_SIZE)));
+                            SetTile(x, y, DrawnTile.FromPencil(GameManager.Instance.Player.pencil, new Vector2(x * GameConstants.CELL_SIZE, y * GameConstants.CELL_SIZE)));
                         }
                     }
                 }
             }
+        }
+
+        public void RemoveDrawnTile(DrawnTile drawnTile)
+        {
+            Tuple<int, int> position = drawnTile.GetCellPosition();
+            SetTile(position.Item1, position.Item2, 
+                new GrassTile(
+                    new Vector2(
+                        position.Item1 * GameConstants.CELL_SIZE, 
+                        position.Item2 * GameConstants.CELL_SIZE
+                        )
+                    )
+                );
         }
     }
 }

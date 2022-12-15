@@ -8,6 +8,6 @@ namespace TankoholicClient
 {
     public class BulletPowerup : PowerupEffectTemporary
     {
-        public int damage = 10;
+        public int damage = 2;
     }
 }
