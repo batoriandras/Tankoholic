@@ -1,10 +1,10 @@
 ﻿using Riptide;
 using Riptide.Utils;
-using System;
+using TankoholicClassLibrary;
 
 namespace TankoholicServer
 {
-    public class ServerNetworkManager
+    internal class ServerNetworkManager
     {
         private static ServerNetworkManager? instance;
         public static ServerNetworkManager Instance
@@ -32,7 +32,7 @@ namespace TankoholicServer
             Server = new Riptide.Server();
             Server.Start(port, maxClient);
 
-            Server.ClientDisconnected += PlayerLeft;
+            Server.ClientDisconnected += (s, e) => PlayerManager.PlayerIds.Remove(e.Client.Id);
         }
 
         public void Update()
@@ -45,9 +45,19 @@ namespace TankoholicServer
             Server.Stop();
         }
 
-        public void PlayerLeft(object sender, ServerDisconnectedEventArgs e)
+        public static Message CreatePositionMessage(ushort id, float[] position, MessageIds messageId)
         {
-            
+            Message message = Message.Create(MessageSendMode.Reliable, (ushort)messageId);
+            message.AddUShort(id);
+            message.AddFloats(position);
+            return message;
+        }
+
+        public static Message CreatePositionMessage(int[] position, MessageIds messageId)
+        {
+            Message message = Message.Create(MessageSendMode.Reliable, (ushort)messageId);
+            message.AddInts(position);
+            return message;
         }
     }
 }

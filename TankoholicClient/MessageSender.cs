@@ -34,10 +34,25 @@ namespace TankoholicClient
             message.AddUShort((ushort)bullet.PlayerId);
             _messages.Add(message);
         }
+        
         public static void SendPosition(Bullet bullet)
         {
-            Message message = Message.Create(MessageSendMode.Unreliable, (ushort)MessageIds.BULLET_POSITION);
+            Message message = Message.Create(MessageSendMode.Reliable, (ushort)MessageIds.BULLET_POSITION);
             message.AddFloats(new float[] { bullet.Position.X, bullet.Position.Y });
+            _messages.Add(message);
+        }
+
+        public static void SendUnpassableTileSpawn(int x, int y)
+        {
+            Message message = Message.Create(MessageSendMode.Reliable, (ushort)MessageIds.UNPASSABLE_TILE_SPAWN);
+            message.AddInts(new int[] { x, y });
+            _messages.Add(message);
+        }
+
+        public static void SendUnpassableTileDespawn(int x, int y)
+        {
+            Message message = Message.Create(MessageSendMode.Reliable, (ushort)MessageIds.UNPASSABLE_TILE_SPAWN);
+            message.AddInts(new int[] { x, y });
             _messages.Add(message);
         }
 

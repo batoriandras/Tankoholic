@@ -118,6 +118,7 @@ namespace TankoholicClient
                         if (map[x,y] is GrassTile)
                         {
                             SetTile(x, y, DrawnTile.FromPencil(GameManager.Instance.Player.pencil, new Vector2(x * GameConstants.CELL_SIZE, y * GameConstants.CELL_SIZE)));
+                            MessageSender.SendUnpassableTileSpawn(x, y);
                         }
                     }
                 }
@@ -135,6 +136,7 @@ namespace TankoholicClient
                         )
                     )
                 );
+            MessageSender.SendUnpassableTileDespawn(position.Item1, position.Item2);
         }
     }
 }

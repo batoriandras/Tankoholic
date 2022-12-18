@@ -4,9 +4,12 @@ namespace TankoholicServer
 {
     internal class ServerDebug
     {
+        public static bool DebugMessages = true;
+        public static bool DebugPosition = false;
+
         public static void Log(string message)
         {
-            if (!Program.DebugMessages) return;
+            if (!DebugMessages) return;
 
             Console.ForegroundColor = ConsoleColor.White;
             RiptideLogger.Log(LogType.Debug, message);
@@ -14,7 +17,7 @@ namespace TankoholicServer
 
         public static void Info(string message)
         {
-            if (!Program.DebugMessages) return;
+            if (!DebugMessages) return;
 
             Console.ForegroundColor = ConsoleColor.Green;
             RiptideLogger.Log(LogType.Info, message);
@@ -23,7 +26,7 @@ namespace TankoholicServer
 
         public static void Warn(string message)
         {
-            if (!Program.DebugMessages) return;
+            if (!DebugMessages) return;
 
             Console.ForegroundColor = ConsoleColor.Yellow;
             RiptideLogger.Log(LogType.Warning, message);
@@ -32,7 +35,7 @@ namespace TankoholicServer
 
         public static void Error(string message)
         {
-            if (!Program.DebugMessages) return;
+            if (!DebugMessages) return;
 
             Console.ForegroundColor = ConsoleColor.Red;
             RiptideLogger.Log(LogType.Error, message);

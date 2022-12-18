@@ -1,7 +1,6 @@
 ﻿using System;
 using Riptide;
 using Riptide.Utils;
-using TankoholicClassLibrary;
 
 namespace TankoholicClient
 {
@@ -19,7 +18,7 @@ namespace TankoholicClient
 
         public Client Client { get; private set; }
 
-        private string ip = "25.38.216.55";
+        private string ip = "127.0.0.1";
         private ushort port = 7070;
 
 
