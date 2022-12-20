@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
@@ -40,8 +41,7 @@ public static class EntityManager
 
             if (entity is UnpassableTile tile)
             {
-                UnpassableTiles.Remove(tile);
-                MapManager.Instance.RemoveDrawnTile((DrawnTile)tile);
+                RemoveUnpassableTile(tile);
             }
             if (entity is PowerupEntity powerup)
             {
@@ -50,7 +50,13 @@ public static class EntityManager
         }
         EntityTrashcan.Clear();
     }
-    
+
+    private static void RemoveUnpassableTile(UnpassableTile tile)
+    {
+        UnpassableTiles.Remove(tile);
+        MapManager.Instance.RemoveDrawnTile((DrawnTile)tile);
+    }
+
     public static void RemoveTank(ushort id)
     {
         Tank tank = OtherTanks.FirstOrDefault(tank => tank.PlayerId == id);
@@ -127,7 +133,10 @@ public static class EntityManager
         var position = message.GetInts();
         int x = position[0];
         int y = position[1];
-        MapManager.Instance.SetTile(x, y, DrawnTile.FromPencil(GameManager.Instance.Player.Pencil, new Vector2(x * GameConstants.CELL_SIZE, y * GameConstants.CELL_SIZE)));
+        Vector2 screenPosition = new Vector2(x * GameConstants.CELL_SIZE, y * GameConstants.CELL_SIZE);
+        DrawnTile drawnTile = DrawnTile.FromPencil(GameManager.Instance.Player.Pencil, screenPosition);
+        MapManager.Instance.SetTile(x, y, drawnTile);
+        UnpassableTiles.Add(drawnTile);
     }
 
     [MessageHandler((ushort)MessageIds.UnpassableTileDespawn)]
@@ -136,6 +145,8 @@ public static class EntityManager
         var position = message.GetInts();
         int x = position[0];
         int y = position[1];
+        UnpassableTile unpassableTile =  UnpassableTiles.First(tile => tile.GetCellPosition() == new Tuple<int, int>(x, y));
+        RemoveUnpassableTile(unpassableTile);
         MapManager.Instance.SetTile(x, y, new GrassTile(new Vector2(x * GameConstants.CELL_SIZE, y * GameConstants.CELL_SIZE)));
     }
 }

@@ -46,16 +46,6 @@ namespace TankoholicClient
                 ComponentManager.Instance.IncrementMyScore();
             }
 
-            StartNewGame();
-        }
-
-        private static void StartNewGame()
-        {
-            Instance.Player.Tank.SpawnMe();
-            EntityManager.OtherTanks.ForEach(tank => tank.SpawnEnemy());
-
-            //ComponentManager.Instance.ResetEnemyScore();
-            //ComponentManager.Instance.ResetMyScore();
         }
 
         public void Update()

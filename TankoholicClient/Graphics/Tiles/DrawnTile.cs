@@ -6,12 +6,10 @@ namespace TankoholicClient.Graphics.Tiles
 {
     public class DrawnTile : UnpassableTile
     {
-        public int PlayerId { get; set; }
         public Color Color { get; set; }
 
-        public DrawnTile(int playerId, Color color, Vector2 position)
+        public DrawnTile(Color color, Vector2 position)
         {
-            PlayerId = playerId;
             Color = color;
 
             Width = GameConstants.CELL_SIZE;
@@ -22,7 +20,7 @@ namespace TankoholicClient.Graphics.Tiles
 
         public static DrawnTile FromPencil(Pencil.Pencil pencil, Vector2 position)
         {
-            return new DrawnTile(pencil.PlayerId, pencil.Color, position);
+            return new DrawnTile(pencil.Color, position);
         }
 
         public override void Update()

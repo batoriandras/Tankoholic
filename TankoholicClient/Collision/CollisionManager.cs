@@ -112,7 +112,6 @@ namespace TankoholicClient.Collision
                     tank2.ApplyPowerup(powerup.Effect);
 
                     PowerupManager.Instance.RemovePowerup(powerup.Id);
-                   // BulletHitDrawnTile((Bullet)entity1, (DrawnTile)entity2);
                 }
             }
             
@@ -121,7 +120,6 @@ namespace TankoholicClient.Collision
         private void BulletHitDrawnTile(Bullet entity1, DrawnTile entity2)
         {
             EntityManager.EntityTrashcan.Add(entity1);
-            EntityManager.EntityTrashcan.Add(entity2);
         }
 
         private void MoveTankOutOfTile(Tank tank, Vector2 velocity)

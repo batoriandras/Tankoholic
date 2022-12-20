@@ -48,7 +48,7 @@ namespace TankoholicClient
             {
                 
 
-                MessageSender.SendPosition(GameManager.Instance.Player);
+                MessageSender.SendPosition(EntityManager.Tank);
             }
 
            

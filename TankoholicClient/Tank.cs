@@ -47,20 +47,11 @@ namespace TankoholicClient
         
         public bool CanShoot { get; private set; }
 
-        public void SpawnEnemy()
+        public void Respawn()
         {
             Sprite = new ColorSprite(Color.Black);
             CanShoot = true;
-            Position = new Vector2(GameConstants.WINDOW_WIDTH/4*3, GameConstants.WINDOW_HEIGHT/2);
-            CurrentHealth = MAX_HEALTH;
-            InitializeTimers();
-        }
-
-        public void SpawnMe()
-        {
-            Sprite = new ColorSprite(Color.Black);
-            CanShoot = true;
-            Position = new Vector2(GameConstants.WINDOW_WIDTH / 4, GameConstants.WINDOW_HEIGHT / 2);
+            Position = new Vector2(GameConstants.WINDOW_WIDTH / 2, GameConstants.WINDOW_HEIGHT / 2);
             CurrentHealth = MAX_HEALTH;
             InitializeTimers();
         }

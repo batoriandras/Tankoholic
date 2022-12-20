@@ -15,14 +15,14 @@ namespace TankoholicClient
             Messages.Add(message);
         }
 
-        public static void SendPosition(Player player)
+        public static void SendPosition(Tank tank)
         {
-            if (player.Tank is null)
+            if (tank is null)
             {
                 return;
             }
             Message message = Message.Create(MessageSendMode.Reliable, (ushort)MessageIds.PlayerPosition);
-            message.AddFloats(new float[] { player.Tank.Position.X, player.Tank.Position.Y });
+            message.AddFloats(new float[] { tank.Position.X, tank.Position.Y });
             Messages.Add(message);
         }
 
