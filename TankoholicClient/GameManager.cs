@@ -54,30 +54,26 @@ namespace TankoholicClient
             {
                 return;
             }
-            InputManager.Instance.KeyboardInput(Keyboard.GetState());
-            InputManager.Instance.MouseInput(Mouse.GetState());
             
-            InputManager.Instance.ShootInput(Keyboard.GetState(), Mouse.GetState());
-            
-            EntityManager.OtherTanks.ForEach(tank => tank.Update());
-
             MapManager.Instance.Update();
-            EntityManager.Tank.Update();
-            EntityManager.Bullets.ForEach(bullet => bullet.Update());
-            EntityManager.Bullets.ForEach(MessageSender.SendPosition);
-
+            
+            ManageInputs();
+            
+            ManageEntities();
+            
             ComponentManager.Instance.Update(Mouse.GetState(), lastMouseState);
-
             lastMouseState = Mouse.GetState();
-
+            
             PowerupManager.Instance.Update();
+            
+            ManageCollisions();
+        }
 
+        private void ManageCollisions()
+        {
             EntityManager.UnpassableTiles.ForEach(unpassableTile => CollisionManager.Instance.ResolveCollision(Player.Tank, unpassableTile));
-
             EntityManager.Bullets.ForEach(bullet => CollisionManager.Instance.ResolveCollision(bullet, EntityManager.Tank));
-
             PowerupManager.Instance.Powerups.ForEach(powerup => CollisionManager.Instance.ResolveCollision(Player.Tank, powerup));
-
             foreach (var bullet in EntityManager.Bullets)
             {
                 EntityManager.OtherTanks.ForEach(tank => CollisionManager.Instance.ResolveCollision(bullet, tank));
@@ -87,7 +83,23 @@ namespace TankoholicClient
             {
                 EntityManager.UnpassableTiles.ForEach(unpassableTile => CollisionManager.Instance.ResolveCollision(bullet, unpassableTile));
             }
+            
             EntityManager.ClearEntityTrashcan();
+        }
+        
+        private void ManageEntities()
+        {
+            EntityManager.OtherTanks.ForEach(tank => tank.Update());
+            EntityManager.Tank.Update();
+            EntityManager.Bullets.ForEach(bullet => bullet.Update());
+            EntityManager.Bullets.ForEach(MessageSender.SendPosition);
+        }
+
+        private void ManageInputs()
+        {
+            InputManager.Instance.KeyboardInput(Keyboard.GetState());
+            InputManager.Instance.MouseInput(Mouse.GetState());
+            InputManager.Instance.ShootInput(Keyboard.GetState(), Mouse.GetState());
         }
 
         public void Draw(ref SpriteBatch spriteBatch, ref Texture2D rectangleBlock)
