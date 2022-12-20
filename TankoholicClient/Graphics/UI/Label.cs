@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace TankoholicClient
+namespace TankoholicClient.Graphics.UI
 {
     public class Label : Component
     {

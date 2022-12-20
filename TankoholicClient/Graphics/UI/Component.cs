@@ -1,10 +1,6 @@
-﻿
+﻿using Microsoft.Xna.Framework;
 
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
-
-namespace TankoholicClient
+namespace TankoholicClient.Graphics.UI
 {
     public abstract class Component
     {

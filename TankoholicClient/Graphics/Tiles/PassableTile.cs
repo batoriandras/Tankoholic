@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TankoholicClient
+﻿namespace TankoholicClient.Graphics.Tiles
 {
-    public abstract class PassableTile : ITile { }
+    public abstract class PassableTile : Tile { }
 }

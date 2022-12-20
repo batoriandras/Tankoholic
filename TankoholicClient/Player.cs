@@ -1,15 +1,10 @@
-﻿using Riptide;
-using TankoholicClient;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using System.Linq;
+﻿using Microsoft.Xna.Framework;
 
-namespace TankoholicClassLibrary
+namespace TankoholicClient
 {
     public class Player
     {
-        public Pencil pencil { get; set; }
+        public Pencil.Pencil Pencil { get; set; }
 
 
         public string Username { get; set; }
@@ -21,7 +16,7 @@ namespace TankoholicClassLibrary
         {
             Id = id;
             Username = username;
-            pencil = new Pencil(Id, Microsoft.Xna.Framework.Color.Gray);
+            Pencil = new Pencil.Pencil(Id, Color.Gray);
         }
 
         public void SetPosition(float x, float y)

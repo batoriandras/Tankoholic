@@ -1,12 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TankoholicClient.Graphics.Sprites;
 
-namespace TankoholicClient
+namespace TankoholicClient.Graphics.Tiles
 {
     public class GrassTile : PassableTile
     {

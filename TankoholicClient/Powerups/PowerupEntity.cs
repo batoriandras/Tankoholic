@@ -1,11 +1,13 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using TankoholicClient.Collision;
+using TankoholicClient.Graphics.Sprites;
+using TankoholicClient.Graphics.Tiles;
+using TankoholicClient.Powerups.Effects;
 
-namespace TankoholicClient
+namespace TankoholicClient.Powerups
 {
     public class PowerupEntity : Entity
     {
@@ -35,7 +37,7 @@ namespace TankoholicClient
         public static PowerupEntity RandomPowerup()
         {
             int index = new Random().Next(allPowerupEffects.Length);
-            List<PassableTile> emptyTiles = MapManager.Instance.emptyTiles();
+            List<PassableTile> emptyTiles = MapManager.Instance.EmptyTiles();
             PassableTile randomTile = emptyTiles[new Random().Next(emptyTiles.Count)];
             Vector2 position = randomTile.Position;
             return new PowerupEntity(allPowerupEffects[index], position);

@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using TankoholicClient.Collision;
+using TankoholicClient.Graphics.Sprites;
 
 namespace TankoholicClient
 {

@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TankoholicClient
+﻿namespace TankoholicClient.Powerups.Effects
 {
     public class SpeedUpPowerup : PowerupEffectTemporary
     {
-        public int speed = 4;
+        public readonly int Speed = 4;
     }
 }

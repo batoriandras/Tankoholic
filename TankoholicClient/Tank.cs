@@ -1,6 +1,9 @@
 ﻿using System.Timers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using TankoholicClient.Collision;
+using TankoholicClient.Graphics.Sprites;
+using TankoholicClient.Powerups.Effects;
 using Timer = System.Timers.Timer;
 
 namespace TankoholicClient
@@ -24,34 +27,23 @@ namespace TankoholicClient
             InitializeTimers();
         }
 
-        public float InitialSpeed { get; private set; } = 2.8f;
-        public float CurrentSpeed { get; private set; } = 2.8f;
+        private const float INITIAL_SPEED = 2.8f;
+        private float currentSpeed = 2.8f;
 
-        public int InitialDamage { get; private set; } = 1;
-        public int CurrentDamage { get; private set; } = 1;
+        private const int INITIAL_DAMAGE = 1;
+        private int currentDamage  = 1;
 
-        public Vector2 Velocity { get; private set; }
+        private Vector2 velocity;
 
-        public int MaxHealth { get; private set; } = 4;
-
+        private const int MAX_HEALTH = 4;
         private int currentHealth = 4;
         public int CurrentHealth
         {
             get => currentHealth;
-            private set
-            {
-                if (value <= MaxHealth)
-                {
-                    currentHealth = value;
-                }
-                else
-                {
-                    currentHealth = MaxHealth;
-                }
-            }
+            private set => currentHealth = value <= MAX_HEALTH ? value : MAX_HEALTH;
         }
 
-        public PowerupEffect AppliedPowerup { get; private set; }
+        private PowerupEffect AppliedPowerup { get; set; }
         
         public bool CanShoot { get; private set; }
 
@@ -60,7 +52,7 @@ namespace TankoholicClient
             Sprite = new ColorSprite(Color.Black);
             CanShoot = true;
             Position = new Vector2(GameConstants.WINDOW_WIDTH/4*3, GameConstants.WINDOW_HEIGHT/2);
-            CurrentHealth = MaxHealth;
+            CurrentHealth = MAX_HEALTH;
             InitializeTimers();
         }
 
@@ -69,7 +61,7 @@ namespace TankoholicClient
             Sprite = new ColorSprite(Color.Black);
             CanShoot = true;
             Position = new Vector2(GameConstants.WINDOW_WIDTH / 4, GameConstants.WINDOW_HEIGHT / 2);
-            CurrentHealth = MaxHealth;
+            CurrentHealth = MAX_HEALTH;
             InitializeTimers();
         }
 
@@ -87,12 +79,12 @@ namespace TankoholicClient
 
         public void SetVelocity(Vector2 direction)
         {
-            Velocity = direction * CurrentSpeed;
+            velocity = direction * currentSpeed;
         }
 
         public Bullet Shoot(Vector2 direction)
         {
-            return new Bullet(Position, direction, EntityManager.Tank.PlayerId, CurrentDamage);
+            return new Bullet(Position, direction, EntityManager.Tank.PlayerId, currentDamage);
         }
 
         private void InitializeTimers()
@@ -131,17 +123,17 @@ namespace TankoholicClient
 
         private void Move()
         {
-            Vector2 nextPosition = Position + Velocity;
+            Vector2 nextPosition = Position + velocity;
             if (nextPosition.X < 0 || nextPosition.X + Width > GameConstants.WINDOW_WIDTH)
             {
-                Velocity = new Vector2(0, Velocity.Y);
+                velocity = new Vector2(0, velocity.Y);
             }
 
             if (nextPosition.Y < 0 || nextPosition.Y + Height > GameConstants.WINDOW_HEIGHT)
             {
-                Velocity = new Vector2(Velocity.X, 0);
+                velocity = new Vector2(velocity.X, 0);
             }
-            Position += Velocity;
+            Position += velocity;
             CollisionShape.Position = Position;
         }
 
@@ -166,23 +158,23 @@ namespace TankoholicClient
             {
                 if (AppliedPowerup is SpeedUpPowerup speedUpPowerup)
                 {
-                    CurrentSpeed = speedUpPowerup.speed;
+                    currentSpeed = speedUpPowerup.Speed;
                     Sprite = new ColorSprite(Color.Red);
                     speedUpPowerup.OnEnd = delegate ()
                     {
                         Sprite = new ColorSprite(Color.Black);
-                        CurrentSpeed = InitialSpeed;
+                        currentSpeed = INITIAL_SPEED;
                         DisposePowerup();
                     };
                 }
                 if (AppliedPowerup is BulletPowerup bulletPowerup)
                 {
-                    CurrentDamage = bulletPowerup.damage;
+                    currentDamage = bulletPowerup.Damage;
                     Sprite = new ColorSprite(Color.Blue);
                     bulletPowerup.OnEnd = delegate ()
                     {
                         Sprite = new ColorSprite(Color.Black);
-                        CurrentDamage = InitialDamage;
+                        currentDamage = INITIAL_DAMAGE;
                         DisposePowerup();
                     };
                 }
@@ -193,7 +185,7 @@ namespace TankoholicClient
             {
                 if (AppliedPowerup is HealthPowerup healthPowerup)
                 {
-                    CurrentHealth += healthPowerup.healthRegain;
+                    CurrentHealth += healthPowerup.HealthRegain;
                     DisposePowerup();
                 }
             }

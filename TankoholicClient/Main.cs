@@ -1,10 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Riptide;
-using System;
-using System.Reflection.Metadata;
-using TankoholicClassLibrary;
+using TankoholicClient.Graphics.UI;
 
 namespace TankoholicClient
 {
@@ -15,7 +12,7 @@ namespace TankoholicClient
         private Texture2D rectangleBlock;
 
 
-        public static bool exitGame = false;
+        public static readonly bool ExitGame = false;
 
         public Main()
         {
@@ -58,7 +55,7 @@ namespace TankoholicClient
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed
             || Keyboard.GetState().IsKeyDown(Keys.Escape)
-            || exitGame)
+            || ExitGame)
             {
                 Exit();
             }

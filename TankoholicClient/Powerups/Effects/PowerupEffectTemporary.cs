@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace TankoholicClient
+namespace TankoholicClient.Powerups.Effects
 {
     public abstract class PowerupEffectTemporary : PowerupEffect
     {
         public Action OnEnd;
 
-        public int Duration { get => 10; }
+        public int Duration => 10;
 
         public void Start()
         {
