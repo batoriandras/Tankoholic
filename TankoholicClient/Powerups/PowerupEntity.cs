@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using TankoholicClient.Collision;
+using TankoholicClient.Entities;
 using TankoholicClient.Graphics.Sprites;
 using TankoholicClient.Graphics.Tiles;
 using TankoholicClient.Powerups.Effects;

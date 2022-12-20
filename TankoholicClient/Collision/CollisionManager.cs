@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
+using TankoholicClient.Entities;
 using TankoholicClient.Graphics.Tiles;
 using TankoholicClient.Powerups;
 

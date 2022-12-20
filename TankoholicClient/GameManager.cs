@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using TankoholicClient.Collision;
+using TankoholicClient.Entities;
 using TankoholicClient.Graphics.UI;
 using TankoholicClient.Powerups;
 

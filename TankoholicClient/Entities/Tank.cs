@@ -6,7 +6,7 @@ using TankoholicClient.Graphics.Sprites;
 using TankoholicClient.Powerups.Effects;
 using Timer = System.Timers.Timer;
 
-namespace TankoholicClient
+namespace TankoholicClient.Entities
 {
     public class Tank : Entity
     {        

@@ -1,5 +1,6 @@
 ﻿using Riptide;
 using System.Collections.Generic;
+using TankoholicClient.Entities;
 using TankoholicLibrary;
 
 namespace TankoholicClient

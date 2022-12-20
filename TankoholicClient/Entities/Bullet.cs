@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using TankoholicClient.Collision;
 
-namespace TankoholicClient
+namespace TankoholicClient.Entities
 {
     public class Bullet:Entity
     {

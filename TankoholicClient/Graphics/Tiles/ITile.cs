@@ -1,4 +1,5 @@
 ﻿using System;
+using TankoholicClient.Entities;
 
 namespace TankoholicClient.Graphics.Tiles
 {

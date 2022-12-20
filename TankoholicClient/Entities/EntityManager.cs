@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
-using TankoholicLibrary;
 using Riptide;
 using TankoholicClient.Graphics.Tiles;
 using TankoholicClient.Powerups;
+using TankoholicLibrary;
 
-namespace TankoholicClient;
+namespace TankoholicClient.Entities;
 
 public static class EntityManager
 {

@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using TankoholicClient.Collision;
 using TankoholicClient.Graphics.Sprites;
 
-namespace TankoholicClient
+namespace TankoholicClient.Entities
 {
     public abstract class Entity
     {

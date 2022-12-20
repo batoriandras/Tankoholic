@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
+using TankoholicClient.Entities;
 
 namespace TankoholicClient.Powerups
 {
