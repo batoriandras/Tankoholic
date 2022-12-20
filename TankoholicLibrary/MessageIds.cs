@@ -2,10 +2,12 @@
 {
     public enum MessageIds : ushort
     {
-        PlayerName = 1,
-        PlayerPosition = 2,
-        PlayerSpawn = 3,
-        BulletPosition = 4,
-        BulletSpawn = 5
+        PLAYER_NAME = 1,
+        PLAYER_POSITION = 2,
+        PLAYER_SPAWN = 3,
+        BULLET_POSITION = 4,
+        BULLET_SPAWN = 5,
+        UNPASSABLE_TILE_SPAWN = 6,
+        UNPASSABLE_TILE_DESPAWN = 7
     }
 }

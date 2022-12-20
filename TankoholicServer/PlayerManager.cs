@@ -1,9 +1,10 @@
-﻿using Riptide;
+﻿using Microsoft.Xna.Framework.Content;
 using TankoholicClassLibrary;
+using Riptide;
 
 namespace TankoholicServer
 {
-    public static class PlayerManager
+    internal static class PlayerManager
     {
         public static readonly List<ushort> PlayerIds = new();
 
@@ -13,8 +14,21 @@ namespace TankoholicServer
             ushort[] ids = new ushort[PlayerIds.Count];
             for(int i = 0; i < PlayerIds.Count; i++)
                 ids[i] = PlayerIds[i];
+
             /* Egyenlőre minden Player ugyanazt a nevet kapja */
-            Program.Server!.SendToAll(CreateSpawnMessage(ids, username));
+            var spawnMessage = CreateSpawnMessage(ids, username);
+
+            string tilePositions = "";
+            for(int i = 0; i < TileManager.Tiles.Count; i++)
+            {
+                var pos = TileManager.Tiles[i];
+                tilePositions += $"{pos[0]},{pos[1]}";
+
+                if (i != TileManager.Tiles.Count - 1)
+                    tilePositions += ";";
+            }
+            spawnMessage.AddString(tilePositions);
+            Program.Server!.SendToAll(spawnMessage);
 
             ServerDebug.Info($"Player joined! Id: {id} Username: {username}");
         }
@@ -23,9 +37,9 @@ namespace TankoholicServer
         private static void Position(ushort id, Message message)
         {
             var position = message.GetFloats();
-            Program.Server!.SendToAll(CreatePositionMessage(id, position));
+            Program.Server!.SendToAll(ServerNetworkManager.CreatePositionMessage(id, position, MessageIds.PLAYER_SPAWN));
 
-            if (!Program.DebugPosition) return;
+            if (!ServerDebug.DebugPosition) return;
             ServerDebug.Warn($"Player({id}) new position: X:{position[0]} Y:{position[1]}");
         }
 
@@ -34,14 +48,6 @@ namespace TankoholicServer
             Message message = Message.Create(MessageSendMode.Reliable, (ushort)MessageIds.PLAYER_SPAWN);
             message.AddUShorts(id);
             message.AddString(username);
-            return message;
-        }
-
-        private static Message CreatePositionMessage(ushort id, float[] position)
-        {
-            Message message = Message.Create(MessageSendMode.Reliable, MessageIds.PLAYER_POSITION);
-            message.AddUShort(id);
-            message.AddFloats((float[])position);
             return message;
         }
     }

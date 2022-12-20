@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
+using TankoholicClassLibrary;
 using Riptide;
+using System.Diagnostics;
 using TankoholicClient.Graphics.Tiles;
 using TankoholicClient.Powerups;
-using TankoholicLibrary;
 
 namespace TankoholicClient;
 
@@ -71,6 +72,7 @@ public static class EntityManager
     {
         var ids = message.GetUShorts();
         var username = message.GetString();
+        var tilePositions = message.GetString();
 
         foreach (var id in ids)
         {
@@ -82,6 +84,19 @@ public static class EntityManager
             else
             {
                 OtherTanks.Add(new Tank(new Vector2(100, 100), id));
+            }
+        }
+
+        var positionStrings = tilePositions.Split(';');
+        if (positionStrings.Length > 1)
+        {
+            foreach (var tilePos in positionStrings)
+            {
+                var split = tilePos.Split(',');
+                int x = int.Parse(split[0]);
+                int y = int.Parse(split[1]);
+
+                MapManager.Instance.SetTile(x, y, DrawnTile.FromPencil(GameManager.Instance.Player.pencil, new Vector2(x * GameConstants.CELL_SIZE, y * GameConstants.CELL_SIZE)));
             }
         }
     }
@@ -99,5 +114,23 @@ public static class EntityManager
                 new Vector2(direction[0], direction[1]), 
                 playerId));
         }
+    }
+
+    [MessageHandler((ushort)MessageIds.UNPASSABLE_TILE_SPAWN)]
+    private static void HandleUnpassableTileSpawn(Message message)
+    {
+        var position = message.GetInts();
+        int x = position[0];
+        int y = position[1];
+        MapManager.Instance.SetTile(x, y, DrawnTile.FromPencil(GameManager.Instance.Player.pencil, new Vector2(x * GameConstants.CELL_SIZE, y * GameConstants.CELL_SIZE)));
+    }
+
+    [MessageHandler((ushort)MessageIds.UNPASSABLE_TILE_DESPAWN)]
+    private static void HandleUnpassableTileDespawn(Message message)
+    {
+        var position = message.GetInts();
+        int x = position[0];
+        int y = position[1];
+        MapManager.Instance.SetTile(x, y, new GrassTile(new Vector2(x * GameConstants.CELL_SIZE, y * GameConstants.CELL_SIZE)));
     }
 }

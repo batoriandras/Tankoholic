@@ -7,9 +7,6 @@ namespace TankoholicServer
     {
         internal static Server? Server { get; private set; }
 
-        public static bool DebugMessages = true;
-        public static bool DebugPosition = false;
-
         private static void Main()
         {
             RiptideLogger.Initialize(Console.WriteLine, false);
