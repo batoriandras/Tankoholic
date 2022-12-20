@@ -19,7 +19,8 @@ namespace TankoholicClient
 
         public Client Client { get; private set; }
 
-        private string ip = "127.0.0.1";
+        private string ip = "25.38.216.55";
+        private string dev_ip = "127.0.0.1";
         private ushort port = 7070;
 
 
@@ -37,7 +38,8 @@ namespace TankoholicClient
 
         public void Connect()
         {
-            Client.Connect($"{ip}:{port}");
+            if(!Client.Connect($"{ip}:{port}"))
+                Client.Connect($"{dev_ip}:{port}");
         }
 
         private void DidConnect(object sender, EventArgs e)
