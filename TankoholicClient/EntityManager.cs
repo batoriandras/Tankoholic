@@ -1,9 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
-using TankoholicClassLibrary;
+using TankoholicLibrary;
 using Riptide;
-using System.Diagnostics;
 using TankoholicClient.Graphics.Tiles;
 using TankoholicClient.Powerups;
 
@@ -96,7 +95,7 @@ public static class EntityManager
                 int x = int.Parse(split[0]);
                 int y = int.Parse(split[1]);
 
-                MapManager.Instance.SetTile(x, y, DrawnTile.FromPencil(GameManager.Instance.Player.pencil, new Vector2(x * GameConstants.CELL_SIZE, y * GameConstants.CELL_SIZE)));
+                MapManager.Instance.SetTile(x, y, DrawnTile.FromPencil(GameManager.Instance.Player.Pencil, new Vector2(x * GameConstants.CELL_SIZE, y * GameConstants.CELL_SIZE)));
             }
         }
     }
@@ -116,16 +115,16 @@ public static class EntityManager
         }
     }
 
-    [MessageHandler((ushort)MessageIds.UNPASSABLE_TILE_SPAWN)]
+    [MessageHandler((ushort)MessageIds.UnpassableTileSpawn)]
     private static void HandleUnpassableTileSpawn(Message message)
     {
         var position = message.GetInts();
         int x = position[0];
         int y = position[1];
-        MapManager.Instance.SetTile(x, y, DrawnTile.FromPencil(GameManager.Instance.Player.pencil, new Vector2(x * GameConstants.CELL_SIZE, y * GameConstants.CELL_SIZE)));
+        MapManager.Instance.SetTile(x, y, DrawnTile.FromPencil(GameManager.Instance.Player.Pencil, new Vector2(x * GameConstants.CELL_SIZE, y * GameConstants.CELL_SIZE)));
     }
 
-    [MessageHandler((ushort)MessageIds.UNPASSABLE_TILE_DESPAWN)]
+    [MessageHandler((ushort)MessageIds.UnpassableTileDespawn)]
     private static void HandleUnpassableTileDespawn(Message message)
     {
         var position = message.GetInts();

@@ -12,7 +12,7 @@ namespace TankoholicClient
 
         private readonly Tile[,] map = new Tile[GameConstants.CELLS_HORIZONTALLY_COUNT, GameConstants.CELLS_VERTICALLY_COUNT];
 
-        private void SetTile(int x, int y, Tile tile)
+        public void SetTile(int x, int y, Tile tile)
         {
             map[x, y] = tile;
             if (tile is UnpassableTile t)
@@ -116,7 +116,7 @@ namespace TankoholicClient
                     {
                         if (map[x,y] is GrassTile)
                         {
-                            SetTile(x, y, DrawnTile.FromPencil(GameManager.Instance.Player.pencil, new Vector2(x * GameConstants.CELL_SIZE, y * GameConstants.CELL_SIZE)));
+                            SetTile(x, y, DrawnTile.FromPencil(GameManager.Instance.Player.Pencil, new Vector2(x * GameConstants.CELL_SIZE, y * GameConstants.CELL_SIZE)));
                             MessageSender.SendUnpassableTileSpawn(x, y);
                         }
                     }

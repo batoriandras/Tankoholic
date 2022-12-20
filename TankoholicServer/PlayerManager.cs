@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework.Content;
-using TankoholicClassLibrary;
+﻿using TankoholicLibrary;
 using Riptide;
 
 namespace TankoholicServer
@@ -33,11 +32,11 @@ namespace TankoholicServer
             ServerDebug.Info($"Player joined! Id: {id} Username: {username}");
         }
 
-        [MessageHandler((ushort)MessageIds.PLAYER_POSITION)]
+        [MessageHandler((ushort)MessageIds.PlayerPosition)]
         private static void Position(ushort id, Message message)
         {
             var position = message.GetFloats();
-            Program.Server!.SendToAll(ServerNetworkManager.CreatePositionMessage(id, position, MessageIds.PLAYER_SPAWN));
+            Program.Server!.SendToAll(ServerNetworkManager.CreatePositionMessage(id, position, MessageIds.PlayerSpawn));
 
             if (!ServerDebug.DebugPosition) return;
             ServerDebug.Warn($"Player({id}) new position: X:{position[0]} Y:{position[1]}");
@@ -45,7 +44,7 @@ namespace TankoholicServer
 
         private static Message CreateSpawnMessage(ushort[] id, string username)
         {
-            Message message = Message.Create(MessageSendMode.Reliable, (ushort)MessageIds.PLAYER_SPAWN);
+            Message message = Message.Create(MessageSendMode.Reliable, (ushort)MessageIds.PlayerSpawn);
             message.AddUShorts(id);
             message.AddString(username);
             return message;

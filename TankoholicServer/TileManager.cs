@@ -1,5 +1,5 @@
 ﻿using Riptide;
-using TankoholicClassLibrary;
+using TankoholicLibrary;
 
 namespace TankoholicServer
 {
@@ -7,21 +7,21 @@ namespace TankoholicServer
     {
         public static List<int[]> Tiles = new();
 
-        [MessageHandler((ushort)MessageIds.UNPASSABLE_TILE_SPAWN)]
+        [MessageHandler((ushort)MessageIds.UnpassableTileSpawn)]
         private static void UnpassableTileSpawn(ushort id, Message message)
         {
             var position = message.GetInts();
             Tiles.Add(position);
-            Program.Server!.SendToAll(ServerNetworkManager.CreatePositionMessage(position, MessageIds.UNPASSABLE_TILE_SPAWN));
+            Program.Server!.SendToAll(ServerNetworkManager.CreatePositionMessage(position, MessageIds.UnpassableTileSpawn));
         }
 
-        [MessageHandler((ushort)MessageIds.UNPASSABLE_TILE_DESPAWN)]
+        [MessageHandler((ushort)MessageIds.UnpassableTileDespawn)]
         private static void UnpassableTileDespawn(ushort id, Message message)
         {
             var position = message.GetInts();
             Tiles.Remove(position);
 
-            Message message1 = Message.Create(MessageSendMode.Reliable, (ushort)MessageIds.UNPASSABLE_TILE_SPAWN);
+            Message message1 = Message.Create(MessageSendMode.Reliable, (ushort)MessageIds.UnpassableTileSpawn);
             message1.AddInts(position);
             Program.Server!.SendToAll(message1);
 

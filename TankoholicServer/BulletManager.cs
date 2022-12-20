@@ -1,23 +1,23 @@
 ﻿using Riptide;
-using TankoholicClassLibrary;
+using TankoholicLibrary;
 
 namespace TankoholicServer;
 
 internal class BulletMessageManager
 {
-    [MessageHandler((ushort)MessageIds.BULLET_SPAWN)]
+    [MessageHandler((ushort)MessageIds.BulletSpawn)]
     public static void SendSpawnMessage(ushort id, Message message)
     {
         Program.Server!.SendToAll(message);
     }
 
-    [MessageHandler((ushort)MessageIds.BULLET_POSITION)]
+    [MessageHandler((ushort)MessageIds.BulletPosition)]
     private static void Position(ushort id, Message message)
     {
         var position = message.GetFloats();
-        Program.Server!.SendToAll(ServerNetworkManager.CreatePositionMessage(id, position, MessageIds.BULLET_POSITION));
+        Program.Server!.SendToAll(ServerNetworkManager.CreatePositionMessage(id, position, MessageIds.BulletPosition));
 
         if (!ServerDebug.DebugPosition) return;
-        ServerDebug.Warn($"Bullet({id}) new position: X:{position[0]} Y:{position[1]}");
+        ServerDebug.Warn($"Bullet({id}) new position: X:{ position[0]} Y:{position[1] }");
     }
 }

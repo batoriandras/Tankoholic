@@ -1,6 +1,6 @@
 ﻿using Riptide;
 using Riptide.Utils;
-using TankoholicClassLibrary;
+using TankoholicLibrary;
 
 namespace TankoholicServer
 {
