@@ -1,19 +1,18 @@
 ﻿using System;
-using Microsoft.VisualBasic.Devices;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
-using System.Windows.Forms.VisualStyles;
+using TankoholicClient.Graphics.Tiles;
 
 namespace TankoholicClient
 {
     public sealed class MapManager
     {
 
-        private readonly ITile[,] map = new ITile[GameConstants.CELLS_HORIZONTALLY_COUNT, GameConstants.CELLS_VERTICALLY_COUNT];
+        private readonly Tile[,] map = new Tile[GameConstants.CELLS_HORIZONTALLY_COUNT, GameConstants.CELLS_VERTICALLY_COUNT];
 
-        public void SetTile(int x, int y, ITile tile)
+        private void SetTile(int x, int y, Tile tile)
         {
             map[x, y] = tile;
             if (tile is UnpassableTile t)
@@ -22,7 +21,7 @@ namespace TankoholicClient
             }
         }
 
-        public void GenerateField()
+        private void GenerateField()
         {
             for (int y = 0; y < GameConstants.CELLS_VERTICALLY_COUNT; y++)
             {
@@ -88,7 +87,7 @@ namespace TankoholicClient
             }
         }
 
-        public List<PassableTile> emptyTiles()
+        public List<PassableTile> EmptyTiles()
         {
             List<PassableTile> tiles = new List<PassableTile>();
             for (int y = 0; y < GameConstants.CELLS_VERTICALLY_COUNT; y++)

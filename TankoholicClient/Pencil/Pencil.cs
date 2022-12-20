@@ -1,22 +1,17 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace TankoholicClient
+namespace TankoholicClient.Pencil
 {
     public class Pencil
     {
-        public int playerId;
-        private const int pencilSize = 5;
+        public int PlayerId { get; }
+        private const int PENCIL_SIZE = 5;
         public Color Color { get; set; }
 
 
         public Pencil(int playerId, Color color)
         {
-            this.playerId = playerId;
+            this.PlayerId = playerId;
             Color = color;
         }
     }

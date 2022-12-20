@@ -4,25 +4,24 @@ using Microsoft.Xna.Framework;
 using TankoholicClassLibrary;
 using Riptide;
 using System.Diagnostics;
+using TankoholicClient.Graphics.Tiles;
+using TankoholicClient.Powerups;
 
 namespace TankoholicClient;
 
-public class EntityManager
+public static class EntityManager
 {
     public static Tank Tank;
-    public static List<Tank> OtherTanks = new();
-    public static List<Bullet> Bullets = new();
-    public static List<Entity> EntityTrashcan = new();
-    public static List<UnpassableTile> UnpassableTiles = new();
+    public static readonly List<Tank> OtherTanks = new();
+    public static readonly List<Bullet> Bullets = new();
+    public static readonly List<Entity> EntityTrashcan = new();
+    public static readonly List<UnpassableTile> UnpassableTiles = new();
 
-    public static void SpawnPlayerTank()
+    private static void SpawnPlayerTank()
     {
         Tank = new Tank(new Vector2(100, 100), ClientNetworkManager.Instance.Client.Id);
         GameManager.Instance.Player.SetTank(Tank);
     }
-
-
-    
 
     public static void SpawnBullet(Vector2 direction)
     {
@@ -35,15 +34,15 @@ public class EntityManager
     {
         foreach (var entity in EntityTrashcan)
         {
-            if (entity is Bullet)
+            if (entity is Bullet bullet)
             {
-                Bullets.Remove((Bullet)entity);
+                Bullets.Remove(bullet);
             }
 
-            if (entity is UnpassableTile)
+            if (entity is UnpassableTile tile)
             {
-                UnpassableTiles.Remove((UnpassableTile)entity);
-                MapManager.Instance.RemoveDrawnTile((DrawnTile)entity);
+                UnpassableTiles.Remove(tile);
+                MapManager.Instance.RemoveDrawnTile((DrawnTile)tile);
             }
             if (entity is PowerupEntity powerup)
             {
@@ -53,7 +52,7 @@ public class EntityManager
         EntityTrashcan.Clear();
     }
     
-    [MessageHandler((ushort)MessageIds.PLAYER_POSITION)]
+    [MessageHandler((ushort)MessageIds.PlayerPosition)]
     private static void HandlePosition(Message message)
     {
         var id = message.GetUShort();
@@ -68,14 +67,12 @@ public class EntityManager
         }
     }
 
-    [MessageHandler((ushort)MessageIds.PLAYER_SPAWN)]
+    [MessageHandler((ushort)MessageIds.PlayerSpawn)]
     private static void HandlePlayerSpawn(Message message)
     {
         var ids = message.GetUShorts();
         var username = message.GetString();
         var tilePositions = message.GetString();
-
-        /* Ha valakinek van erre valami jobb megoldása akkor ne legyen rest átírni */
 
         foreach (var id in ids)
         {
@@ -103,7 +100,7 @@ public class EntityManager
             }
         }
     }
-    [MessageHandler((ushort)MessageIds.BULLET_SPAWN)]
+    [MessageHandler((ushort)MessageIds.BulletSpawn)]
     private static void HandleBulletSpawn(Message message)
     {
         var position = message.GetFloats();

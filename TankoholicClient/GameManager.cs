@@ -1,13 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using TankoholicClassLibrary;
-using System.Timers;
-using Riptide;
 using TankoholicClient.Collision;
+using TankoholicClient.Graphics.UI;
+using TankoholicClient.Powerups;
 
 namespace TankoholicClient
 {
@@ -53,7 +49,7 @@ namespace TankoholicClient
             StartNewGame();
         }
 
-        public static void StartNewGame()
+        private static void StartNewGame()
         {
             GameManager.Instance.Player.Tank.SpawnMe();
             EntityManager.OtherTanks.ForEach(tank => tank.SpawnEnemy());
@@ -92,21 +88,15 @@ namespace TankoholicClient
 
             PowerupManager.Instance.Powerups.ForEach(powerup => CollisionManager.Instance.ResolveCollision(Player.Tank, powerup));
 
-            for (int i = 0; i < EntityManager.Bullets.Count; i++)
+            foreach (var bullet in EntityManager.Bullets)
             {
-                EntityManager.OtherTanks.ForEach(tank => CollisionManager.Instance.ResolveCollision(EntityManager.Bullets[i], tank));
+                EntityManager.OtherTanks.ForEach(tank => CollisionManager.Instance.ResolveCollision(bullet, tank));
             }
             EntityManager.OtherTanks.ForEach(tank => CollisionManager.Instance.ResolveCollision(EntityManager.Tank, tank));
             foreach (var bullet in EntityManager.Bullets)
             {
                 EntityManager.UnpassableTiles.ForEach(unpassableTile => CollisionManager.Instance.ResolveCollision(bullet, unpassableTile));
             }
-            /*
-            if (Player.OtherPlayers.TryGetValue(ClientNetworkManager.Instance.Client.Id, out Player localPlayer))
-            {
-                localPlayer.Update(Keyboard.GetState());
-            }
-            */
             EntityManager.ClearEntityTrashcan();
         }
 
@@ -119,7 +109,6 @@ namespace TankoholicClient
                 return;
             }
             EntityManager.Tank.Draw(ref spriteBatch, ref rectangleBlock);
-            /* Ideiglenesen tesztelésre */
             foreach (var tank in EntityManager.OtherTanks)
             {
                 spriteBatch.Draw(rectangleBlock,

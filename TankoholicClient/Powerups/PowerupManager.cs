@@ -1,13 +1,9 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using SharpDX.Direct3D9;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework.Graphics;
 
-namespace TankoholicClient
+namespace TankoholicClient.Powerups
 {
     public class PowerupManager
     {
@@ -32,7 +28,7 @@ namespace TankoholicClient
 
         private List<PowerupEntity> powerups = new List<PowerupEntity>();
 
-        public List<PowerupEntity> Powerups { get => powerups; }
+        public List<PowerupEntity> Powerups => powerups;
 
         public void Initialize()
         {

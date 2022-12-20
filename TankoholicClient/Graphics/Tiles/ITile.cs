@@ -1,13 +1,8 @@
-﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
-namespace TankoholicClient
+namespace TankoholicClient.Graphics.Tiles
 {
-    public abstract class ITile : Entity
+    public abstract class Tile : Entity
     {
         public Tuple<int, int> GetCellPosition()
         {

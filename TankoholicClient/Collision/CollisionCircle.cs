@@ -1,25 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Xna.Framework;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Xna.Framework;
 
-namespace TankoholicClient
+namespace TankoholicClient.Collision
 {
     public class CollisionCircle: ICollisionShape
     {
         public Vector2 CenterPosition { get; set; }
         public Vector2 Position
         {
-            get
-            {
-                return CenterPosition - new Vector2(Radius, Radius);
-            }
-            set
-            {
-                CenterPosition = value + new Vector2(Radius, Radius);
-            }
+            get => CenterPosition - new Vector2(Radius, Radius);
+            set => CenterPosition = value + new Vector2(Radius, Radius);
         }
         public float Radius { get; set; }
         public float Width { get => Radius*2; set => Radius = value/2; }

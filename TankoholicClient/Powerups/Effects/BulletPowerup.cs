@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TankoholicClient
+﻿namespace TankoholicClient.Powerups.Effects
 {
     public class BulletPowerup : PowerupEffectTemporary
     {
-        public int damage = 2;
+        public readonly int Damage = 2;
     }
 }

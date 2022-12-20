@@ -1,4 +1,4 @@
-﻿namespace TankoholicClassLibrary
+﻿namespace TankoholicLibrary
 {
     public enum MessageIds : ushort
     {

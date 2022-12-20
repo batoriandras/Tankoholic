@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
+using TankoholicClient.Graphics.Tiles;
+using TankoholicClient.Powerups;
 
 namespace TankoholicClient.Collision
 {

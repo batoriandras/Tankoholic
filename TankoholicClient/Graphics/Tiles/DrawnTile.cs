@@ -1,8 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
+using TankoholicClient.Collision;
 
-namespace TankoholicClient
+namespace TankoholicClient.Graphics.Tiles
 {
     public class DrawnTile : UnpassableTile
     {
@@ -20,9 +20,9 @@ namespace TankoholicClient
             Position = position;
         }
 
-        public static DrawnTile FromPencil(Pencil pencil, Vector2 position)
+        public static DrawnTile FromPencil(Pencil.Pencil pencil, Vector2 position)
         {
-            return new DrawnTile(pencil.playerId, pencil.Color, position);
+            return new DrawnTile(pencil.PlayerId, pencil.Color, position);
         }
 
         public override void Update()

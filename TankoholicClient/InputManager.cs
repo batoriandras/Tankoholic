@@ -58,14 +58,12 @@ namespace TankoholicClient
 
         public void ShootInput(KeyboardState keyboardInput, MouseState mouseInput)
         {
-            Vector2 mouseDirection;
             if (EntityManager.Tank.CanShoot 
-         //   && lastMouseInput.LeftButton == ButtonState.Pressed
-            && mouseInput.LeftButton == ButtonState.Pressed)
+                && mouseInput.LeftButton == ButtonState.Pressed)
             {
-                mouseDirection = Vector2.Normalize(
+                var mouseDirection = Vector2.Normalize(
                     mouseInput.Position.ToVector2() - EntityManager.Tank.Position
-                    );
+                );
                 EntityManager.SpawnBullet(mouseDirection);
                 EntityManager.Tank.StartTimer();
             }
