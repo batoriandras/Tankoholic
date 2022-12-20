@@ -36,7 +36,7 @@ namespace TankoholicServer
         private static void Position(ushort id, Message message)
         {
             var position = message.GetFloats();
-            Program.Server!.SendToAll(ServerNetworkManager.CreatePositionMessage(id, position, MessageIds.PlayerSpawn));
+            Program.Server!.SendToAll(ServerNetworkManager.CreatePositionMessage(id, position, MessageIds.PlayerPosition));
 
             if (!ServerDebug.DebugPosition) return;
             ServerDebug.Warn($"Player({id}) new position: X:{position[0]} Y:{position[1]}");

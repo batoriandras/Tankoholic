@@ -27,6 +27,7 @@ namespace TankoholicClient
             RiptideLogger.Initialize(Console.WriteLine, Console.WriteLine, Console.WriteLine, Console.WriteLine, false);
 
             Client = new Client();
+            Client.ClientDisconnected += (s, e) => EntityManager.RemoveTank(e.Id);
             Client.Connected += DidConnect;
             Client.ConnectionFailed += FailedToConnect;
         

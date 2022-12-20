@@ -51,11 +51,11 @@ namespace TankoholicClient
 
         private static void StartNewGame()
         {
-            GameManager.Instance.Player.Tank.SpawnMe();
+            Instance.Player.Tank.SpawnMe();
             EntityManager.OtherTanks.ForEach(tank => tank.SpawnEnemy());
 
-            ComponentManager.Instance.ResetEnemyScore();
-            ComponentManager.Instance.ResetMyScore();
+            //ComponentManager.Instance.ResetEnemyScore();
+            //ComponentManager.Instance.ResetMyScore();
         }
 
         public void Update()

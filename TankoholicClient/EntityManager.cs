@@ -51,6 +51,12 @@ public static class EntityManager
         EntityTrashcan.Clear();
     }
     
+    public static void RemoveTank(ushort id)
+    {
+        Tank tank = OtherTanks.FirstOrDefault(tank => tank.PlayerId == id);
+        OtherTanks.Remove(tank);
+    }
+
     [MessageHandler((ushort)MessageIds.PlayerPosition)]
     private static void HandlePosition(Message message)
     {
