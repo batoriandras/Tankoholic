@@ -17,7 +17,6 @@ namespace TankoholicServer
             }
         }
 
-        private ServerNetworkManager() { }
 
         public Riptide.Server Server { get; private set; }
 
@@ -26,12 +25,12 @@ namespace TankoholicServer
 
         public void Initialize()
         {
-
             RiptideLogger.Initialize(Console.WriteLine, Console.WriteLine, Console.WriteLine, Console.WriteLine, false);
 
-            Server = new Riptide.Server();
+            Server = new Server();
             Server.Start(port, maxClient);
 
+            Server.ClientConnected += (s, e) => PlayerManager.SendSpawnMessage(e.Client.Id, "Janika");
             Server.ClientDisconnected += (s, e) => PlayerManager.PlayerIds.Remove(e.Client.Id);
         }
 

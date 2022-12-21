@@ -14,7 +14,6 @@ namespace TankoholicServer
             for(int i = 0; i < PlayerIds.Count; i++)
                 ids[i] = PlayerIds[i];
 
-            /* Egyenlőre minden Player ugyanazt a nevet kapja */
             var spawnMessage = CreateSpawnMessage(ids, username);
 
             string tilePositions = "";
@@ -27,7 +26,7 @@ namespace TankoholicServer
                     tilePositions += ";";
             }
             spawnMessage.AddString(tilePositions);
-            Program.Server!.SendToAll(spawnMessage);
+            ServerNetworkManager.Instance.Server!.SendToAll(spawnMessage);
 
             ServerDebug.Info($"Player joined! Id: {id} Username: {username}");
         }
@@ -36,7 +35,7 @@ namespace TankoholicServer
         private static void Position(ushort id, Message message)
         {
             var position = message.GetFloats();
-            Program.Server!.SendToAll(ServerNetworkManager.CreatePositionMessage(id, position, MessageIds.PlayerPosition));
+            ServerNetworkManager.Instance.Server!.SendToAll(ServerNetworkManager.CreatePositionMessage(id, position, MessageIds.PlayerPosition));
 
             if (!ServerDebug.DebugPosition) return;
             ServerDebug.Warn($"Player({id}) new position: X:{position[0]} Y:{position[1]}");

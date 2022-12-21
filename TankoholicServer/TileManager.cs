@@ -12,7 +12,7 @@ namespace TankoholicServer
         {
             var position = message.GetInts();
             Tiles.Add(position);
-            Program.Server!.SendToAll(ServerNetworkManager.CreatePositionMessage(position, MessageIds.UnpassableTileSpawn));
+            ServerNetworkManager.Instance.Server!.SendToAll(ServerNetworkManager.CreatePositionMessage(position, MessageIds.UnpassableTileSpawn));
         }
 
         [MessageHandler((ushort)MessageIds.UnpassableTileDespawn)]
@@ -23,7 +23,7 @@ namespace TankoholicServer
 
             Message message1 = Message.Create(MessageSendMode.Reliable, (ushort)MessageIds.UnpassableTileSpawn);
             message1.AddInts(position);
-            Program.Server!.SendToAll(message1);
+            ServerNetworkManager.Instance.Server!.SendToAll(message1);
 
         }
     }

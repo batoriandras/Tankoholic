@@ -8,14 +8,14 @@ internal class BulletMessageManager
     [MessageHandler((ushort)MessageIds.BulletSpawn)]
     public static void SendSpawnMessage(ushort id, Message message)
     {
-        Program.Server!.SendToAll(message);
+        ServerNetworkManager.Instance.Server!.SendToAll(message);
     }
 
     [MessageHandler((ushort)MessageIds.BulletPosition)]
     private static void Position(ushort id, Message message)
     {
         var position = message.GetFloats();
-        Program.Server!.SendToAll(ServerNetworkManager.CreatePositionMessage(id, position, MessageIds.BulletPosition));
+        ServerNetworkManager.Instance.Server!.SendToAll(ServerNetworkManager.CreatePositionMessage(id, position, MessageIds.BulletPosition));
 
         if (!ServerDebug.DebugPosition) return;
         ServerDebug.Warn($"Bullet({id}) new position: X:{ position[0]} Y:{position[1] }");
